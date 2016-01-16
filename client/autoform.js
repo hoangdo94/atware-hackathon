@@ -13,9 +13,9 @@ AutoForm.hooks({
     onSuccess: (formType, result) => {
       if (result) {
         FlowRouter.go('/battle/' + result);
-        Bert.alert('Battle created', 'success');
+        Bert.alert('Battle created', 'success', 'growl-top-right');
       } else {
-        Bert.alert('Cannot create battle', 'error');
+        Bert.alert('Cannot create battle', 'error', 'growl-top-right');
       }
     }
   }

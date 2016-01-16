@@ -14,7 +14,11 @@
       {{/if}}
       </h4>
       <div class="thumbnail" style="margin: 0px 100px;">
-        <img src="/avatars/default.png">
+        {{#if battleInfo.users.[0]}}
+          <img src="{{userVodkarModel battleInfo.users.[0].userId}}">
+        {{else}}
+          <img src="/images/no-avatar.png">
+        {{/if}}
       </div>
       <div class="progress" style="margin: 10px 100px;">
         <div class="progress-bar" role="progressbar" aria-valuenow="{{battleInfo.users.[0].currentHp}}" aria-valuemin="0" aria-valuemax="100" style="width: {{battleInfo.users.[0].currentHp}}%;">
@@ -58,7 +62,11 @@
       {{/if}}
       </h4>
       <div class="thumbnail" style="margin: 0px 100px;">
-        <img src="/avatars/default.png">
+        {{#if battleInfo.users.[1]}}
+          <img src="{{userVodkarModel battleInfo.users.[1].userId}}">
+        {{else}}
+          <img src="/images/no-avatar.png">
+        {{/if}}
       </div>
       <div class="progress" style="margin: 10px 100px;">
         <div class="progress-bar" role="progressbar" aria-valuenow="{{battleInfo.users.[1].currentHp}}" aria-valuemin="0" aria-valuemax="100" style="width: {{battleInfo.users.[1].currentHp}}%;">
