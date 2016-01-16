@@ -13,7 +13,7 @@ Template.battle.onCreated(() => {
     if (Battle.findOne()){
       var battle = Battle.findOne();
       var endTime = battle.endTime;
-      if (battle.users.length){
+      if (endTime && battle.users.length){
         var userIndex = (Meteor.userId() === battle.users[0].userId) ? 0 : 1;
         if (endTime && battle.users[userIndex] && !battle.users[userIndex].accuracy){
           // Send this user's battle stats to the server

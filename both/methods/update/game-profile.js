@@ -68,7 +68,7 @@ Meteor.methods({
           userId: argument.userId
         }, {
           $set: {
-            'modelImgUrl': model.imageUrl
+            'currentModel': model._id
           }
         });
         return documentId;

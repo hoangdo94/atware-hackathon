@@ -12,9 +12,18 @@ Template.registerHelper('userVodkarModel', (userId) => {
     userId: userId
   });
   if (gp) {
-    return gp.modelImgUrl;
+    return VodkarModel.findOne(gp.currentModel).imageUrl;
   }
   return '/avatars/default.png';
+});
+Template.registerHelper('userVodkarClass', (userId) => {
+  var gp = GameProfile.findOne({
+    userId: userId
+  });
+  if (gp) {
+    return VodkarModel.findOne(gp.currentModel).title;
+  }
+  return 'Unknown';
 });
 Template.registerHelper('showPercentage', (input) => {
     return (Math.round(input * 10000) / 100 + " %");
