@@ -29,3 +29,10 @@ publicRoutes.route( '/reset-password/:token', {
     BlazeLayout.render( 'default', { yield: 'resetPassword' } );
   }
 });
+
+publicRoutes.route( '/user/:id' , {
+  name: 'user-profile',
+  action(params, queryParams) {
+    BlazeLayout.render( 'default', { yield: 'userProfile', userId: params['id'] } );
+  }
+});
