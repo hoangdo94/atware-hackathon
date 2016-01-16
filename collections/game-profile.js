@@ -25,9 +25,9 @@ let GameProfileSchema = new SimpleSchema({
     label: "Average words per minute.",
     defaultValue: 0
   },
-  "avgAccurracy": {
+  "avgAccuracy": {
     type: Number,
-    label: "Average accurracy (%).",
+    label: "Average accuracy (%).",
     defaultValue: 0
   },
   "gamesPlayed": {
