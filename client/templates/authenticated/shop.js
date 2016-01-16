@@ -14,6 +14,10 @@ Template.shop.helpers({
     var profile = GameProfile.findOne({userId: Meteor.userId()});
     var model = VodkarModel.findOne(modelId);
     return (profile.modelImgUrl === model.imageUrl);
+  },
+  currentBalance: () => {
+    var profile = GameProfile.findOne({userId: Meteor.userId()});
+    return profile.points;
   }
 });
 Template.shop.events({

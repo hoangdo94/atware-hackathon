@@ -28,12 +28,12 @@ Template.battle.onCreated(() => {
             userId: Meteor.userId(),
             accuracy: Math.round(accuracy * 100) / 100
           };
-          Meteor.call('sendBattleSummary', requestObject, (err) => {
+          Meteor.call('sendBattleSummary', requestObject, (err, points) => {
             if (err) console.error(err);
             if (battle.users[userIndex].result === 'win'){
-              Bert.alert('You won this battle!', 'info', 'growl-top-right');
+              Bert.alert('You won this battle!<br> <img src="/images/coins.png" width="24px"/> ' + points + ' awarded.', 'info', 'growl-top-right');
             } else {
-              Bert.alert('You lost this battle!', 'info', 'growl-top-right');
+              Bert.alert('You lost this battle!<br> <img src="/images/coins.png" width="24px"/> ' + points + ' awarded.', 'info', 'growl-top-right');
             }
           });
         }

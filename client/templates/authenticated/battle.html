@@ -25,10 +25,14 @@
           <span class="sr-only">{{battleInfo.users.[0].currentHp}} HP left</span>
         </div>
       </div>
+      {{#if isEnded}}
       <div class="result" style="margin: 10px 100px;">
-        <p>WPM: <span style="font-weight: bold;">{{battleInfo.users.[0].wpm}}</span></p>
+        <p>Words typed: <span style="font-weight: bold;">{{battleInfo.users.[0].wordsCompleted}}</span></p>
         <p>Accuracy: <span style="font-weight: bold;">{{showPercentage battleInfo.users.[0].accuracy}}</span></p>
+        <p>WPM: <span style="font-weight: bold;">{{battleInfo.users.[0].wpm}}</span></p>
       </div>
+      {{/if}}
+
     </div>
     <div class="col-md-4">
       {{#if isStarted}}
@@ -73,18 +77,21 @@
           <span class="sr-only">{{battleInfo.users.[1].currentHp}} HP left</span>
         </div>
       </div>
+      {{#if isEnded}}
       <div class="result" style="margin: 10px 100px;">
-        <p>WPM: <span style="font-weight: bold;">{{battleInfo.users.[1].wpm}}</span></p>
+        <p>Words typed: <span style="font-weight: bold;">{{battleInfo.users.[1].wordsCompleted}}</span></p>
         <p>Accuracy: <span style="font-weight: bold;">{{showPercentage battleInfo.users.[1].accuracy}}</span></p>
+        <p>WPM: <span style="font-weight: bold;">{{battleInfo.users.[1].wpm}}</span></p>
       </div>
+      {{/if}}
     </div>
   </div>
   {{#if isStarted}}{{#if isJoined}}{{#unless isEnded}}
   <div class="row">
     <hr/>
     <div style="margin: 0px 30px;">
-      <div class="panel-body">
-        <p class="form-control" id="key">{{battleInfo.battleText}}</p>
+      <div class="jumbotron">
+        <p id="key">{{battleInfo.battleText}}</p>
         <input class="form-control txtbox" type="text">
       </div>
     </div>

@@ -30,7 +30,7 @@ Meteor.methods({
         throw new Meteor.Error('model-already-owned', 'Already owned.');
       }
       if (gp.points < model.price) {
-        throw new Meteor.Error('not-enough-coins', 'Not enough Poins.');
+        throw new Meteor.Error('not-enough-coins', 'Not enough Points.');
       }
       try {
         var documentId = GameProfile.update({

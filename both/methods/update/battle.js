@@ -35,13 +35,13 @@ Meteor.methods({
     },
     startBattle(argument) {
       check(argument, Object);
-
+      var test = "She thanked the US and Japan for their support and vowed Taiwan would contribute to peace and stability in the region.";
       try {
         var documentId = Battle.update(argument.battleId, {
           $set: {
             startTime: Date.now(),
-            battleText: 'after spending putang ina mo bobo',
-            battleTextArr: 'after spending putang ina mo bobo'.split(' ')
+            battleText: test,
+            battleTextArr: test.split(' ')
           }
         });
         return documentId;
@@ -138,7 +138,7 @@ Meteor.methods({
     sendBattleSummary(argument){
       check(argument, Object);
       try {
-        var users, player, opponent, documentId;
+        var users, player, opponent, points;
         var battle = Battle.findOne(argument.battleId);
         var endTimeMs = new Date(battle.endTime).getTime();
         var startTimeMs = new Date(battle.startTime).getTime();
@@ -154,21 +154,29 @@ Meteor.methods({
           }
         }
         if (player === 0) {
-          documentId = Battle.update(argument.battleId, {
+          points = Math.round(battle.users[0].wordsCompleted * argument.accuracy * Math.floor(users[0].wordsCompleted / battleTimeInMinutes) / 20);
+          Battle.update(argument.battleId, {
             $set: {
               'users.0.accuracy': argument.accuracy,
               'users.0.wpm': Math.floor(users[0].wordsCompleted / battleTimeInMinutes)
             },
           });
+          GameProfile.update({userId: battle.users[0].userId}, {
+            $inc: { points: points}
+          });
         } else {
-          documentId = Battle.update(argument.battleId, {
+          points = Math.round(battle.users[1].wordsCompleted * argument.accuracy * Math.floor(users[0].wordsCompleted / battleTimeInMinutes) / 20);
+          Battle.update(argument.battleId, {
             $set: {
               'users.1.accuracy': argument.accuracy,
               'users.1.wpm': Math.floor(users[1].wordsCompleted / battleTimeInMinutes)
             },
           });
+          GameProfile.update({userId: battle.users[1].userId}, {
+            $inc: { points: points}
+          });
         }
-        return documentId;
+        return points;
       } catch (exception) {
         return exception;
       }
