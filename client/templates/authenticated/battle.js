@@ -37,6 +37,13 @@ Template.battle.helpers({
       return !!b.startTime;
     }
     return false;
+  },
+  userNickname: (userId) => {
+    var gp = GameProfile.findOne({userId: userId});
+    if (gp) {
+      return gp.nickname;
+    }
+    return 'Unknown Vodkar';
   }
 });
 
@@ -45,8 +52,7 @@ Template.battle.events({
     if (!FlowRouter.subsReady()) return;
     Meteor.call('joinBattle', {
       battleId: FlowRouter.getParam('id'),
-      userId: Meteor.userId(),
-      userEmail: Meteor.user().emails[0].address
+      userId: Meteor.userId()
     }, (err) => {
       if (err) {
         Bert.alert('Cannot join the battle!', 'error');
@@ -76,7 +82,7 @@ Template.battle.events({
   },
   'keypress .txtbox': function(event, template) {
     event.preventDefault();
-    
+
     var word = template.$('#key').text();
     if (event.which !== 0) {
       total++;
@@ -103,7 +109,7 @@ Template.battle.events({
           });
         }
         if (word.substring(t.length + index) === '') { //done
-          
+
           template.$(".txtbox").val('');
           template.$("#key").html("<span class='highlighted'>" + word + "</span>");
           template.$(".txtbox").prop('disabled', true);

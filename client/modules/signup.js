@@ -1,17 +1,21 @@
-let signup = ( options ) => {
-  _validate( options.form, options.template );
+let signup = (options) => {
+  _validate(options.form, options.template);
 };
 
-let _validate = ( form, template ) => {
-  $( form ).validate( validation( template ) );
+let _validate = (form, template) => {
+  $(form).validate(validation(template));
 };
 
-let validation = ( template ) => {
+let validation = (template) => {
   return {
     rules: {
       emailAddress: {
         required: true,
         email: true
+      },
+      nickname: {
+        required: true,
+        maxlength: 20
       },
       password: {
         required: true,
@@ -27,6 +31,10 @@ let validation = ( template ) => {
         required: 'Need an email address here.',
         email: 'Is this email address legit?'
       },
+      nickname: {
+        required: 'Please choose your nickname.',
+        maxlength: 'Use at most twenty characters, please.'
+      },
       password: {
         required: 'Need a password here.',
         minlength: 'Use at least six characters, please.'
@@ -36,21 +44,26 @@ let validation = ( template ) => {
         equalTo: 'Passwords do not match.'
       }
     },
-    submitHandler() { _handleSignup( template ); }
+    submitHandler() {
+      _handleSignup(template);
+    }
   };
 };
 
-let _handleSignup = ( template ) => {
+let _handleSignup = (template) => {
   let user = {
-    email: template.find( '[name="emailAddress"]' ).value,
-    password: template.find( '[name="password"]' ).value
+    email: template.find('[name="emailAddress"]').value,
+    password: template.find('[name="password"]').value,
+    profile: {
+      nickname: template.find('[name="nickname"]').value
+    }
   };
 
-  Accounts.createUser( user, ( error ) => {
-    if ( error ) {
-      Bert.alert( error.reason, 'danger' );
+  Accounts.createUser(user, (error) => {
+    if (error) {
+      Bert.alert(error.reason, 'danger');
     } else {
-      Bert.alert( 'Welcome!', 'success' );
+      Bert.alert('Welcome!', 'success');
     }
   });
 };

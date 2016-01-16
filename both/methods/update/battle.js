@@ -7,7 +7,6 @@ Meteor.methods({
           $addToSet: {
             'users': {
               userId: argument.userId,
-              userEmail: argument.userEmail,
               wordsCompleted: 0,
               currentHp: 100
             }

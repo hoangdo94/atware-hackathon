@@ -8,7 +8,7 @@
     <div class="col-md-4 text-center">
       <h4>
       {{#if battleInfo.users.[0]}}
-        {{battleInfo.users.[0].userEmail}}
+        {{userNickname battleInfo.users.[0].userId}}
       {{else}}
         Vodkar #1
       {{/if}}
@@ -43,7 +43,7 @@
     <div class="col-md-4 text-center">
       <h4>
       {{#if battleInfo.users.[1]}}
-        {{battleInfo.users.[1].userEmail}}
+        {{userNickname battleInfo.users.[1].userId}}
       {{else}}
         Vodkar #2
       {{/if}}

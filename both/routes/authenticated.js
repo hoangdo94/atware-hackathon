@@ -30,5 +30,6 @@ authenticatedRoutes.route( '/battle/:id' , {
   },
   subscriptions(params) {
     this.register('battleSubs', Meteor.subscribe('battle', {battleId: params.id}));
+    this.register('usersProfileSubs', Meteor.subscribe('usersGameProfile'));
   }
 });

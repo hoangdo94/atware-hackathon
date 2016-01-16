@@ -76,10 +76,6 @@ let BattleUserSchema = new SimpleSchema({
     type: String,
     label: "The ID of the user."
   },
-  "userEmail": {
-    type: String,
-    label: "The Email of the user."
-  },
   "wpm": {
     type: Number,
     defaultValue: 0
