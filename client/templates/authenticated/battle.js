@@ -2,11 +2,39 @@ var t = '';
 var total = 0;
 var correct = 0;
 var index = 0;
+
 Template.battle.onCreated(() => {
   t = '';
   total = 0;
   correct = 0;
   index = 0;
+
+  Tracker.autorun(function () {
+    if (Battle.findOne()){
+      var battle = Battle.findOne();
+      var endTime = battle.endTime;
+      if (battle.users.length){
+        var userIndex = (Meteor.userId() === battle.users[0].userId) ? 0 : 1;
+        if (endTime && battle.users[userIndex] && !battle.users[userIndex].accuracy){
+          // Send this user's battle stats to the server
+          var accuracy;
+          if (total !== 0){
+            accuracy = correct / total;
+          } else {
+            accuracy = 0;
+          }
+          var requestObject = {
+            battleId: FlowRouter.getParam('id'),
+            userId: Meteor.userId(),
+            accuracy: Math.round(accuracy * 100) / 100
+          };
+          Meteor.call('sendBattleSummary', requestObject, (err) => {
+            if (err) console.error(err);
+          });
+        }
+      }
+    }
+  });
 });
 
 Template.battle.helpers({

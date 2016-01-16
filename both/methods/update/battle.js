@@ -70,6 +70,9 @@ Meteor.methods({
               $set: {
                 'winnerId': winnerId,
                 'users.1.currentHp': 0
+              },
+              $inc: {
+                'users.0.wordsCompleted': 1
               }
             });
           } else {
@@ -78,6 +81,9 @@ Meteor.methods({
               $set: {
                 'winnerId': winnerId,
                 'users.0.currentHp': 0
+              },
+              $inc: {
+                'users.1.wordsCompleted': 1
               }
             });
           }
@@ -101,10 +107,8 @@ Meteor.methods({
             player = 1;
             opponent = 0;
           }
-          // console.log(player, opponent);
           var word = battle.battleTextArr[users[player].wordsCompleted];
           var damage = (100 * word.length / (battle.battleText.length - battle.battleTextArr.length + 1));
-          // console.log(word, damage);
           var documentId;
           if (player === 0) {
             documentId = Battle.update(argument.battleId, {
@@ -123,6 +127,44 @@ Meteor.methods({
           }
           return documentId;
         }
+      } catch (exception) {
+        return exception;
+      }
+    },
+    sendBattleSummary(argument){
+      check(argument, Object);
+      try {
+        var users, player, opponent, documentId;
+        var battle = Battle.findOne(argument.battleId);
+        var endTimeMs = new Date(battle.endTime).getTime();
+        var startTimeMs = new Date(battle.startTime).getTime();
+        var battleTimeInMinutes = (endTimeMs - startTimeMs) / 60000;
+        if (battle) {
+          users = battle.users;
+          if (users[0].userId === argument.userId) {
+            player = 0;
+            opponent = 1;
+          } else {
+            player = 1;
+            opponent = 0;
+          }
+        }
+        if (player === 0) {
+          documentId = Battle.update(argument.battleId, {
+            $set: {
+              'users.0.accuracy': argument.accuracy,
+              'users.0.wpm': Math.floor(users[0].wordsCompleted / battleTimeInMinutes)
+            },
+          });
+        } else {
+          documentId = Battle.update(argument.battleId, {
+            $set: {
+              'users.1.accuracy': argument.accuracy,
+              'users.1.wpm': Math.floor(users[1].wordsCompleted / battleTimeInMinutes)
+            },
+          });
+        }
+        return documentId;
       } catch (exception) {
         return exception;
       }

@@ -21,6 +21,10 @@
           <span class="sr-only">{{battleInfo.users.[0].currentHp}} HP left</span>
         </div>
       </div>
+      <div class="result" style="margin: 10px 100px;">
+        <p>WPM: <span style="font-weight: bold;">{{battleInfo.users.[0].wpm}}</span></p>
+        <p>Accuracy (%): <span style="font-weight: bold;">{{battleInfo.users.[0].accuracy}}</span></p>
+      </div>
     </div>
     <div class="col-md-4">
       {{#if isStarted}}
@@ -60,6 +64,10 @@
         <div class="progress-bar" role="progressbar" aria-valuenow="{{battleInfo.users.[1].currentHp}}" aria-valuemin="0" aria-valuemax="100" style="width: {{battleInfo.users.[1].currentHp}}%;">
           <span class="sr-only">{{battleInfo.users.[1].currentHp}} HP left</span>
         </div>
+      </div>
+      <div class="result" style="margin: 10px 100px;">
+        <p>WPM: <span style="font-weight: bold;">{{battleInfo.users.[1].wpm}}</span></p>
+        <p>Accuracy (%): <span style="font-weight: bold;">{{battleInfo.users.[1].accuracy}}</span></p>
       </div>
     </div>
   </div>
