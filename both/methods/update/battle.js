@@ -41,8 +41,8 @@ Meteor.methods({
         var documentId = Battle.update(argument.battleId, {
           $set: {
             startTime: Date.now(),
-            battleText: 'After spending putang ina mo bobo',
-            battleTextArr: 'After spending putang ina mo bobo'.split(' ')
+            battleText: 'after spending putang ina mo bobo',
+            battleTextArr: 'after spending putang ina mo bobo'.split(' ')
           }
         });
         return documentId;

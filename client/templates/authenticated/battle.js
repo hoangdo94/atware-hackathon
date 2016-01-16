@@ -1,10 +1,12 @@
 var t = '';
-var done = false;
 var total = 0;
 var correct = 0;
 var index = 0;
 Template.battle.onCreated(() => {
-
+  t = '';
+  total = 0;
+  correct = 0;
+  index = 0;
 });
 
 Template.battle.helpers({
@@ -51,9 +53,7 @@ Template.battle.events({
       } else {
         Bert.alert('You joined the battle!', 'success');
         //check and start game
-        console.log(FlowRouter.subsReady());
         if (Battle.findOne().users.length === 2) {
-          console.log('start game');
           Meteor.call('startBattle', {
             battleId: FlowRouter.getParam('id')
           });
@@ -76,12 +76,11 @@ Template.battle.events({
   },
   'keypress .txtbox': function(event, template) {
     event.preventDefault();
-    if (done) return;
+    
     var word = template.$('#key').text();
     if (event.which !== 0) {
       total++;
       var s = String.fromCharCode(event.which);
-      console.log(s);
       t += s;
       if (word.substring(index, index + t.length) == t) {
         var lastIndex = word.substring(index).search(' ');
@@ -104,7 +103,7 @@ Template.battle.events({
           });
         }
         if (word.substring(t.length + index) === '') { //done
-          done = true;
+          
           template.$(".txtbox").val('');
           template.$("#key").html("<span class='highlighted'>" + word + "</span>");
           template.$(".txtbox").prop('disabled', true);
