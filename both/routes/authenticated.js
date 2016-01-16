@@ -15,3 +15,17 @@ authenticatedRoutes.route( '/dashboard', {
     BlazeLayout.render( 'default', { yield: 'dashboard' } );
   }
 });
+
+authenticatedRoutes.route( '/create-battle', {
+  name: 'create-battle',
+  action() {
+    BlazeLayout.render( 'default', { yield: 'createBattle' } );
+  }
+});
+
+authenticatedRoutes.route( '/battle/:id' , {
+  name: 'battle',
+  action(params, queryParams) {
+    BlazeLayout.render( 'default', { yield: 'battle', battleId: params.id } );
+  }
+});

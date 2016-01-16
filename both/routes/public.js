@@ -33,6 +33,6 @@ publicRoutes.route( '/reset-password/:token', {
 publicRoutes.route( '/user/:id' , {
   name: 'user-profile',
   action(params, queryParams) {
-    BlazeLayout.render( 'default', { yield: 'userProfile', userId: params['id'] } );
+    BlazeLayout.render( 'default', { yield: 'userProfile', userId: params.id } );
   }
 });

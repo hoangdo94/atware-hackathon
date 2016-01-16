@@ -1,16 +1,16 @@
 /**
  * Created by hoangdo on 1/16/16.
  */
-GameProfile = new Meteor.Collection( 'gameProfile' );
+GameProfile = new Meteor.Collection('gameProfile');
 
 GameProfile.allow({
-    insert: () => false,
+  insert: () => false,
   update: () => false,
   remove: () => false
 });
 
 GameProfile.deny({
-    insert: () => true,
+  insert: () => true,
   update: () => true,
   remove: () => true
 });
@@ -42,4 +42,4 @@ let GameProfileSchema = new SimpleSchema({
   }
 });
 
-GameProfile.attachSchema( GameProfileSchema );
+GameProfile.attachSchema(GameProfileSchema);
