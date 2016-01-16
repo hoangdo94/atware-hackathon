@@ -20,6 +20,16 @@ let GameProfileSchema = new SimpleSchema({
     type: String,
     label: "The ID of the user."
   },
+  "nickname": {
+    type: String,
+    label: "The nickname of the user.",
+    optional: true
+  },
+  "points": {
+    type: Number,
+    label: "The points of the user.",
+    defaultValue: 0
+  },
   "avgWPM": {
     type: Number,
     label: "Average words per minute.",
