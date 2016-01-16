@@ -4,7 +4,7 @@ Template.userProfile.onCreated(() => {
 
 Template.userProfile.helpers({
   userInfo: () => Meteor.users.findOne(FlowRouter.getParam('id')),
-  gameProfile: () => GameProfile.findOne(),
+  gameProfile: () => GameProfile.findOne({userId: FlowRouter.getParam('id')}),
   isDisabled: (userId) => {
     if (userId !== Meteor.userId()){
       return "disabled";
