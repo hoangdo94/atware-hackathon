@@ -15,7 +15,7 @@ AutoForm.hooks({
         FlowRouter.go('/battle/' + result);
         Bert.alert('Battle created', 'success', 'growl-top-right');
       } else {
-        Bert.alert('Cannot create battle', 'error', 'growl-top-right');
+        Bert.alert('Cannot create battle', 'danger', 'growl-top-right');
       }
     }
   }

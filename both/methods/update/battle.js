@@ -69,7 +69,9 @@ Meteor.methods({
             Battle.update(argument.battleId, {
               $set: {
                 'winnerId': winnerId,
-                'users.1.currentHp': 0
+                'users.1.currentHp': 0,
+                'users.1.result': 'lose',
+                'users.0.result': 'win',
               },
               $inc: {
                 'users.0.wordsCompleted': 1
@@ -80,7 +82,9 @@ Meteor.methods({
             Battle.update(argument.battleId, {
               $set: {
                 'winnerId': winnerId,
-                'users.0.currentHp': 0
+                'users.0.currentHp': 0,
+                'users.0.result': 'lose',
+                'users.1.result': 'win'
               },
               $inc: {
                 'users.1.wordsCompleted': 1

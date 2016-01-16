@@ -27,7 +27,7 @@
       </div>
       <div class="result" style="margin: 10px 100px;">
         <p>WPM: <span style="font-weight: bold;">{{battleInfo.users.[0].wpm}}</span></p>
-        <p>Accuracy (%): <span style="font-weight: bold;">{{battleInfo.users.[0].accuracy}}</span></p>
+        <p>Accuracy: <span style="font-weight: bold;">{{showPercentage battleInfo.users.[0].accuracy}}</span></p>
       </div>
     </div>
     <div class="col-md-4">
@@ -75,7 +75,7 @@
       </div>
       <div class="result" style="margin: 10px 100px;">
         <p>WPM: <span style="font-weight: bold;">{{battleInfo.users.[1].wpm}}</span></p>
-        <p>Accuracy (%): <span style="font-weight: bold;">{{battleInfo.users.[1].accuracy}}</span></p>
+        <p>Accuracy: <span style="font-weight: bold;">{{showPercentage battleInfo.users.[1].accuracy}}</span></p>
       </div>
     </div>
   </div>

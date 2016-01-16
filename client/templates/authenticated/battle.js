@@ -30,6 +30,11 @@ Template.battle.onCreated(() => {
           };
           Meteor.call('sendBattleSummary', requestObject, (err) => {
             if (err) console.error(err);
+            if (battle.users[userIndex].result === 'win'){
+              Bert.alert('You won this battle!', 'info', 'growl-top-right');
+            } else {
+              Bert.alert('You lost this battle!', 'info', 'growl-top-right');
+            }
           });
         }
       }
@@ -83,7 +88,7 @@ Template.battle.events({
       userId: Meteor.userId()
     }, (err) => {
       if (err) {
-        Bert.alert('Cannot join the battle!', 'error', 'growl-top-right');
+        Bert.alert('Cannot join the battle!', 'danger', 'growl-top-right');
       } else {
         Bert.alert('You joined the battle!', 'success', 'growl-top-right');
         //check and start game

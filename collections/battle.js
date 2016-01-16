@@ -91,6 +91,10 @@ let BattleUserSchema = new SimpleSchema({
   "wordsCompleted": {
     type: Number,
     defaultValue: 0
+  },
+  "result": {
+    type: String,
+    defaultValue: ''
   }
 });
 

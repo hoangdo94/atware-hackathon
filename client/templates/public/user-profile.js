@@ -26,7 +26,7 @@ Template.userProfile.events({
     }, (err) => {
       if (err){
         console.error(err);
-        Bert.alert('Failed to update user nickname.', 'error', 'growl-top-right');
+        Bert.alert('Failed to update user nickname.', 'danger', 'growl-top-right');
       }
       Bert.alert('Successfully updated user nickname.', 'success', 'growl-top-right');
     });
