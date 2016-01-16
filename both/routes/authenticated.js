@@ -23,6 +23,13 @@ authenticatedRoutes.route( '/create-battle', {
   }
 });
 
+authenticatedRoutes.route( '/join-battle', {
+  name: 'join-battle',
+  action() {
+    BlazeLayout.render( 'default', { yield: 'joinBattle' } );
+  }
+});
+
 authenticatedRoutes.route( '/battle/:id' , {
   name: 'battle',
   action(params, queryParams) {
