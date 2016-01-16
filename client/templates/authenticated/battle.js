@@ -1,6 +1,6 @@
 Template.battle.onCreated(() => {
   Template.instance().subscribe('battle', {
-    battleId: Template.instance().data.battleId()
+    battleId: FlowRouter.getParam('id')
   });
 });
 
