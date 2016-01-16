@@ -1,7 +1,5 @@
 Template.battle.onCreated(() => {
-  Template.instance().subscribe('battle', {
-    battleId: Template.instance().data.battleId()
-  });
+
 });
 
 Template.battle.helpers({

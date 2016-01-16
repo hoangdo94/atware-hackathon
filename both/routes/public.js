@@ -34,5 +34,8 @@ publicRoutes.route( '/user/:id' , {
   name: 'user-profile',
   action(params, queryParams) {
     BlazeLayout.render( 'default', { yield: 'userProfile', userId: params.id } );
+  },
+  subscriptions(params) {
+    this.register('userProfileSubs', Meteor.subscribe('userProfile', {userId: params.id}));
   }
 });

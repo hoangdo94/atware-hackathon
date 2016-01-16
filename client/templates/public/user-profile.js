@@ -1,5 +1,5 @@
-Template.userProfile.onCreated( () => {
-  Template.instance().subscribe( 'userProfile' , {userId: Template.instance().data.userId()});
+Template.userProfile.onCreated(() => {
+  
 });
 
 Template.userProfile.helpers({
