@@ -5,24 +5,24 @@
     <hr />
   </div>
   <div class="row">
-    <div class="col-md-5 text-center">
-      <div class="thumbnail" style="margin: 0px 30px;">
+    <div class="col-md-4 text-center">
+      <h4>
+      {{#if battleInfo.users.[0]}}
+        {{battleInfo.users.[0].userEmail}}
+      {{else}}
+        Vodkar #1
+      {{/if}}
+      </h4>
+      <div class="thumbnail" style="margin: 0px 100px;">
         <img src="/avatars/default.png">
-        <div class="caption">
-          <h3>
-            {{#if battleInfo.users.[0]}}
-              {{battleInfo.users.[0].userEmail}}
-            {{else}}
-              Vodkar #1
-            {{/if}}
-          </h3>
-        </div>
       </div>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-4">
+      {{#if isStarted}}
+
+      {{else}}
       <div class="battle-info text-center">
-        <br/>
-        {{#unless isReady}}
+        <br/> {{#unless isReady}}
         <p>{{> loading}}</p>
         <p>Waiting for Vodkars</p>
         {{/unless}}
@@ -30,24 +30,27 @@
         <br/>
       </div>
       {{#if isJoined}}
-        <button class="btn btn-block btn-danger btn-leave-battle">Leave</button>
+      <button class="btn btn-block btn-danger btn-leave-battle">Leave</button>
       {{else}}
-        <button class="btn btn-block btn-primary btn-join-battle">Join</button>
-      {{/if}}
+      <button class="btn btn-block btn-primary btn-join-battle">Join</button>
+      {{/if}} {{/if}}
     </div>
-    <div class="col-md-5 text-center">
-      <div class="thumbnail" style="margin: 0px 30px;">
+    <div class="col-md-4 text-center">
+      <h4>
+      {{#if battleInfo.users.[1]}}
+        {{battleInfo.users.[1].userEmail}}
+      {{else}}
+        Vodkar #2
+      {{/if}}
+      </h4>
+      <div class="thumbnail" style="margin: 0px 100px;">
         <img src="/avatars/default.png">
-        <div class="caption">
-          <h3>
-            {{#if battleInfo.users.[1]}}
-              {{battleInfo.users.[1].userEmail}}
-            {{else}}
-              Vodkar #2
-            {{/if}}
-          </h3>
-        </div>
       </div>
     </div>
   </div>
+  {{#if isStarted}}
+  <div class="row">
+    <p>{{battleInfo.battleText}}</p>
+  </div>
+  {{/if}}
 </template>

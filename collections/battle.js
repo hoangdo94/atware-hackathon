@@ -47,6 +47,13 @@ let BattleSchema = new SimpleSchema({
     autoform: {
       omit: true
     }
+  },
+  battleText: {
+    type: String,
+    optional: true,
+    autoform: {
+      omit: true
+    }
   }
 });
 

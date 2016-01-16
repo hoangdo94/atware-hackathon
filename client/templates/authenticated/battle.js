@@ -23,6 +23,13 @@ Template.battle.helpers({
       return b.users.length === 2;
     }
     return false;
+  },
+  isStarted: () => {
+    let b = Battle.findOne();
+    if (b) {
+      return !!b.startTime;
+    }
+    return false;
   }
 });
 
@@ -37,6 +44,15 @@ Template.battle.events({
         Bert.alert('Cannot join the battle!', 'error');
       } else {
         Bert.alert('You joined the battle!', 'success');
+        //check and start game
+        if (Battle.findOne().users.length === 2) {
+          console.log('start game');
+          Meteor.call('startBattle', {
+            battleId: tmpl.data.battleId()
+          }, (err) => {
+            console.log(err);
+          });
+        }
       }
     });
   },
