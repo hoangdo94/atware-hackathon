@@ -1,3 +1,70 @@
 <template name="index">
-  <h3>Welcome to Vodkars Battle!</h3>
+  <div class="jumbotron">
+    <h2>Welcome to Vodkars Battle!</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    <p><a class="btn btn-primary btn-lg" href="#" role="button">How to play? »</a></p>
+  </div>
+  <div class="row equal">
+
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Ranking</h3>
+        </div>
+        <div class="panel-body">
+          <table class="table table-hover">
+            <tbody>
+              {{#each waitingBattles}}
+              <tr>
+                <td>
+                  <a href="/battle/{{_id}}">{{title}}</a>
+                </td>
+                <td>
+                  <a href="/battle/{{_id}}" class="btn btn-sm btn-success pull-right">Join</a>
+                </td>
+              </tr>
+              {{else}}
+              <tr>
+                <td colspan="2">
+                  No Data.
+                </td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Recent Battles</h3>
+        </div>
+        <div class="panel-body">
+          <table class="table table-hover">
+            <tbody>
+              {{#each recentBattles}}
+              <tr>
+                <td>
+                  <a href="/battle/{{_id}}">{{title}}</a>
+                </td>
+                <td>
+                  <a href="/battle/{{_id}}" class="btn btn-sm btn-primary pull-right">Watch</a>
+                </td>
+              </tr>
+              {{else}}
+              <tr>
+                <td colspan="2">
+                  No Battles.
+                </td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </template>

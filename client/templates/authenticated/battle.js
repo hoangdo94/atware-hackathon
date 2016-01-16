@@ -37,6 +37,13 @@ Template.battle.helpers({
       return !!b.startTime;
     }
     return false;
+  },
+  isEnded: () => {
+    let b = Battle.findOne();
+    if (b) {
+      return !!b.endTime;
+    }
+    return false;
   }
 });
 
@@ -102,10 +109,8 @@ Template.battle.events({
           });
         }
         if (word.substring(t.length + index) === '') { //done
-
           template.$(".txtbox").val('');
           template.$("#key").html("<span class='highlighted'>" + word + "</span>");
-          template.$(".txtbox").prop('disabled', true);
           Meteor.call('endBattle', {
             battleId: FlowRouter.getParam('id')
           }, (err, r) => {

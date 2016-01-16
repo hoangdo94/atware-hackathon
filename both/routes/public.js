@@ -6,6 +6,9 @@ publicRoutes.route( '/', {
   name: 'index',
   action() {
     BlazeLayout.render( 'default', { yield: 'index' } );
+  },
+  subscriptions() {
+    this.register('recentBattlesSubs', Meteor.subscribe('recentBattles', 10));
   }
 });
 

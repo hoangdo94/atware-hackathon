@@ -4,7 +4,7 @@
   "description": "Application description.",
   "scripts": {
     "start": "meteor --settings settings-development.json",
-    "staging": "meteor deploy staging.meteor.com --settings settings-development.json",
+    "staging": "meteor deploy vodkars-battle.meteor.com",
     "production": "meteor deploy production.meteor.com --settings settings-production.json"
   }
 }
