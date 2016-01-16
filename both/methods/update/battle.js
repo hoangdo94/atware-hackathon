@@ -35,13 +35,31 @@ Meteor.methods({
     },
     startBattle(argument) {
       check(argument, Object);
-      var test = "She thanked the US and Japan for their support and vowed Taiwan would contribute to peace and stability in the region.";
+      var test = "Leicester City returned to the top of the Premier League as they drew away to struggling Aston Villa.";
       try {
         var documentId = Battle.update(argument.battleId, {
           $set: {
             startTime: Date.now(),
             battleText: test,
             battleTextArr: test.split(' ')
+          }
+        });
+        // Update the 2 player's game played
+        var battle = Battle.findOne(argument.battleId);
+        var user0Id = battle.users[0].userId;
+        var user1Id = battle.users[1].userId;
+        GameProfile.update({
+          userId: user0Id
+        }, {
+          $push: {
+            'gamesPlayed': argument.battleId
+          }
+        });
+        GameProfile.update({
+          userId: user1Id
+        }, {
+          $push: {
+            'gamesPlayed': argument.battleId
           }
         });
         return documentId;
@@ -78,7 +96,9 @@ Meteor.methods({
               }
             });
           } else {
+            // User 1 is the winner
             winnerId = users[1].userId;
+            loserId = users[0].userId;
             Battle.update(argument.battleId, {
               $set: {
                 'winnerId': winnerId,
@@ -138,7 +158,7 @@ Meteor.methods({
     sendBattleSummary(argument){
       check(argument, Object);
       try {
-        var users, player, opponent, points;
+        var users, player, opponent, points, accuracy, wpm;
         var battle = Battle.findOne(argument.battleId);
         var endTimeMs = new Date(battle.endTime).getTime();
         var startTimeMs = new Date(battle.startTime).getTime();
@@ -154,27 +174,71 @@ Meteor.methods({
           }
         }
         if (player === 0) {
-          points = Math.round(battle.users[0].wordsCompleted * argument.accuracy * Math.floor(users[0].wordsCompleted / battleTimeInMinutes) / 20);
+          accuracy = argument.accuracy;
+          wpm = Math.floor(users[0].wordsCompleted / battleTimeInMinutes);
+          points = Math.round((battle.users[0].wordsCompleted * accuracy * wpm) / 20);
           Battle.update(argument.battleId, {
             $set: {
-              'users.0.accuracy': argument.accuracy,
-              'users.0.wpm': Math.floor(users[0].wordsCompleted / battleTimeInMinutes)
+              'users.0.accuracy': accuracy,
+              'users.0.wpm': wpm
             },
           });
-          GameProfile.update({userId: battle.users[0].userId}, {
-            $inc: { points: points}
-          });
+          var playerGP = GameProfile.findOne({ userId: battle.users[0].userId});
+          if (playerGP.gamesPlayed.length === 0){
+            var newAvgWPM = wpm;
+            var newAvgAccuracy = accuracy;
+          } else {
+            var newAvgWPM = Math.round((wpm + playerGP.avgWPM * (playerGP.gamesPlayed.length - 1)) / playerGP.gamesPlayed.length);
+            var newAvgAccuracy = Math.round((accuracy + playerGP.avgAccuracy * (playerGP.gamesPlayed.length - 1)) / playerGP.gamesPlayed.length * 100) / 100;
+          }
+          var gameProfileModifier = {
+            $inc: { points: points},
+            $set: {
+              avgWPM: newAvgWPM,
+              avgAccuracy: newAvgAccuracy
+            },
+            $push: {}
+          };
+          if (battle.users[0].currentHp > battle.users[1].currentHp){
+            // User 0 is the winner
+            gameProfileModifier['$push'] = {
+              'gamesWon': argument.battleId
+            }
+          }
+          GameProfile.update({userId: battle.users[0].userId}, gameProfileModifier);
         } else {
-          points = Math.round(battle.users[1].wordsCompleted * argument.accuracy * Math.floor(users[0].wordsCompleted / battleTimeInMinutes) / 20);
+          accuracy = argument.accuracy;
+          wpm = Math.floor(users[1].wordsCompleted / battleTimeInMinutes);
+          points = Math.round((battle.users[1].wordsCompleted * accuracy * wpm) / 20);
           Battle.update(argument.battleId, {
             $set: {
-              'users.1.accuracy': argument.accuracy,
-              'users.1.wpm': Math.floor(users[1].wordsCompleted / battleTimeInMinutes)
+              'users.1.accuracy': accuracy,
+              'users.1.wpm': wpm
             },
           });
-          GameProfile.update({userId: battle.users[1].userId}, {
-            $inc: { points: points}
-          });
+          var playerGP = GameProfile.findOne({ userId: battle.users[1].userId});
+          if (playerGP.gamesPlayed.length === 0){
+            var newAvgWPM = wpm;
+            var newAvgAccuracy = accuracy;
+          } else {
+            var newAvgWPM = Math.round((wpm + playerGP.avgWPM * (playerGP.gamesPlayed.length - 1)) / playerGP.gamesPlayed.length);
+            var newAvgAccuracy = Math.round((accuracy + playerGP.avgAccuracy * (playerGP.gamesPlayed.length - 1)) / playerGP.gamesPlayed.length * 100) / 100;
+          }
+          var gameProfileModifier = {
+            $inc: { points: points},
+            $set: {
+              avgWPM: newAvgWPM,
+              avgAccuracy: newAvgAccuracy
+            },
+            $push: {}
+          };
+          if (battle.users[1].currentHp > battle.users[0].currentHp){
+            // User 1 is the winner
+            gameProfileModifier['$push'] = {
+              'gamesWon': argument.battleId
+            }
+          }
+          GameProfile.update({userId: battle.users[1].userId}, gameProfileModifier);
         }
         return points;
       } catch (exception) {

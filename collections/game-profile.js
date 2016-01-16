@@ -38,7 +38,8 @@ let GameProfileSchema = new SimpleSchema({
   "avgAccuracy": {
     type: Number,
     label: "Average accuracy (%).",
-    defaultValue: 0
+    defaultValue: 0,
+    decimal: true
   },
   "gamesPlayed": {
     type: [String],

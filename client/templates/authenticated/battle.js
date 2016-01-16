@@ -91,7 +91,7 @@ Template.battle.events({
         Bert.alert('Cannot join the battle!', 'danger', 'growl-top-right');
       } else {
         Bert.alert('You joined the battle!', 'success', 'growl-top-right');
-        //check and start game
+        // Check and start game
         if (Battle.findOne().users.length === 2) {
           Meteor.call('startBattle', {
             battleId: FlowRouter.getParam('id')
