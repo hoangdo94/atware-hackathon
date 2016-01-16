@@ -55,9 +55,9 @@ Template.battle.events({
       userId: Meteor.userId()
     }, (err) => {
       if (err) {
-        Bert.alert('Cannot join the battle!', 'error');
+        Bert.alert('Cannot join the battle!', 'error', 'growl-top-right');
       } else {
-        Bert.alert('You joined the battle!', 'success');
+        Bert.alert('You joined the battle!', 'success', 'growl-top-right');
         //check and start game
         if (Battle.findOne().users.length === 2) {
           Meteor.call('startBattle', {
@@ -74,9 +74,9 @@ Template.battle.events({
       userId: Meteor.userId(),
     }, (err) => {
       if (err) {
-        Bert.alert('Cannot leave the battle!', 'error');
+        Bert.alert('Cannot leave the battle!', 'error', 'growl-top-right');
       } else {
-        Bert.alert('You left the battle!', 'success');
+        Bert.alert('You left the battle!', 'success', 'growl-top-right');
       }
     });
   },

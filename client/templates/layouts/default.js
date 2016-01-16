@@ -23,7 +23,7 @@ Template.default.helpers({
     },
     redirectPublic() {
       return handleRedirect([
-        'shop',
+        'vodkar-shop',
         'battle',
         'create-battle',
         'join-battle'

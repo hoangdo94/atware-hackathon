@@ -29,9 +29,9 @@ let _handleRecovery = ( template ) => {
 
   Accounts.forgotPassword( { email: email }, ( error ) => {
     if ( error ) {
-      Bert.alert( error.reason, 'warning' );
+      Bert.alert( error.reason, 'warning', 'growl-top-right' );
     } else {
-      Bert.alert( 'Check your inbox for a reset link!', 'success' );
+      Bert.alert( 'Check your inbox for a reset link!', 'success', 'growl-top-right' );
     }
   });
 };

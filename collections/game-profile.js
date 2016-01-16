@@ -49,6 +49,15 @@ let GameProfileSchema = new SimpleSchema({
     type: [String],
     label: "All won games.",
     defaultValue: []
+  },
+  modelsOwned: {
+    type: [String],
+    label: "All owned Vodkar models.",
+    defaultValue: []
+  },
+  modelImgUrl: {
+    type: String,
+    defaultValue: '/avatars/default.png'
   }
 });
 
