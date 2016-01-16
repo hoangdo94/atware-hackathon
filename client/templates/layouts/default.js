@@ -24,7 +24,10 @@ Template.default.helpers({
 	redirectPublic() {
 		return handleRedirect([
 			'index',
-			'dashboard'
+			'dashboard',
+			'battle',
+			'create-battle',
+			'join-battle'
 		], '/login' );
 	}
 });
