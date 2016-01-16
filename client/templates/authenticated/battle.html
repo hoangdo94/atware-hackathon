@@ -8,7 +8,7 @@
     <div class="col-md-4 text-center">
       <h4>
       {{#if battleInfo.users.[0]}}
-        {{userNickname battleInfo.users.[0].userId}}
+        <a href="/user/{{battleInfo.users.[0].userId}}">{{userNickname battleInfo.users.[0].userId}}</a>
       {{else}}
         Vodkar #1
       {{/if}}
@@ -43,7 +43,7 @@
     <div class="col-md-4 text-center">
       <h4>
       {{#if battleInfo.users.[1]}}
-        {{userNickname battleInfo.users.[1].userId}}
+        <a href="/user/{{battleInfo.users.[1].userId}}">{{userNickname battleInfo.users.[1].userId}}</a>
       {{else}}
         Vodkar #2
       {{/if}}
