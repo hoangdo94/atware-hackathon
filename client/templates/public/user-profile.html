@@ -1,8 +1,40 @@
 <template name="userProfile">
-    <div class="row">
-      {{userInfo._id}}
-      {{userInfo.emails.[0].address}}
-      {{gameProfile.avgWPM}}
-      {{gameProfile.gamesPlayed.length}}
-    </div>
+  <div class="row text-center">
+    <h3>Viewing profile for user: <p style="color: red">{{userInfo.emails.[0].address}}</p></h3>
+  </div>
+  <br>
+  <div class="row">
+    <form class="form-horizontal" role="form">
+      <div class="form-group">
+          <label class="control-label col-sm-2" for="email">Email:</label>
+          <div class="col-sm-10">
+            <input type="email" class="form-control" value="{{userInfo.emails.[0].address}}" disabled="true">
+          </div>
+      </div>
+      <div class="form-group">
+          <label class="control-label col-sm-2" for="email">Average Words Per Minute:</label>
+          <div class="col-sm-10">
+            <input type="email" class="form-control" value="{{gameProfile.avgWPM}}" disabled="true">
+          </div>
+      </div>
+      <div class="form-group">
+          <label class="control-label col-sm-2" for="email">Average Accuracy (%):</label>
+          <div class="col-sm-10">
+            <input type="email" class="form-control" value="{{gameProfile.avgAccuracy}}" disabled="true">
+          </div>
+      </div>
+      <div class="form-group">
+          <label class="control-label col-sm-2" for="email">Games Played:</label>
+          <div class="col-sm-10">
+            <input type="email" class="form-control" value="{{gameProfile.gamesPlayed.length}}" disabled="true">
+          </div>
+      </div>
+      <div class="form-group">
+          <label class="control-label col-sm-2" for="email">Games Won:</label>
+          <div class="col-sm-10">
+            <input type="email" class="form-control" value="{{gameProfile.gamesWon.length}}" disabled="true">
+          </div>
+      </div>
+    </form>
+  </div>
 </template>
