@@ -1,10 +1,14 @@
 <template name="createBattle">
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">Create new Battle</h3>
-    </div>
-    <div class="panel-body">
-      {{> quickForm collection="Battle" id="createBattleForm" type="insert"}}
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Create new Battle</h3>
+        </div>
+        <div class="panel-body">
+          {{> quickForm collection="Battle" id="createBattleForm" type="insert"}}
+        </div>
+      </div>
     </div>
   </div>
 </template>

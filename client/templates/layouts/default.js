@@ -23,8 +23,7 @@ Template.default.helpers({
 	},
 	redirectPublic() {
 		return handleRedirect([
-			'index',
-			'dashboard',
+			'shop',
 			'battle',
 			'create-battle',
 			'join-battle'

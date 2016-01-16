@@ -2,17 +2,10 @@ const authenticatedRoutes = FlowRouter.group({
   name: 'authenticated'
 });
 
-authenticatedRoutes.route( '/', {
-  name: 'index',
+authenticatedRoutes.route( '/vodkar-shop', {
+  name: 'vodkar-shop',
   action() {
-    BlazeLayout.render( 'default', { yield: 'index' } );
-  }
-});
-
-authenticatedRoutes.route( '/dashboard', {
-  name: 'dashboard',
-  action() {
-    BlazeLayout.render( 'default', { yield: 'dashboard' } );
+    BlazeLayout.render( 'default', { yield: 'shop' } );
   }
 });
 
