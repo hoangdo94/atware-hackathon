@@ -16,11 +16,16 @@
       <div class="thumbnail" style="margin: 0px 100px;">
         <img src="/avatars/default.png">
       </div>
+      {{#if isStarted}}
+      <div class="progress" style="margin: 10px 100px;">
+        <div class="progress-bar" role="progressbar" aria-valuenow="{{battleInfo.users.[0].currentHp}}" aria-valuemin="0" aria-valuemax="100" style="width: {{battleInfo.users.[0].currentHp}}%;">
+          <span class="sr-only">{{battleInfo.users.[0].currentHp}} HP left</span>
+        </div>
+      </div>
+      {{/if}}
     </div>
     <div class="col-md-4">
-      {{#if isStarted}}
-
-      {{else}}
+      {{#if isStarted}} {{else}}
       <div class="battle-info text-center">
         <br/> {{#unless isReady}}
         <p>{{> loading}}</p>
@@ -46,12 +51,24 @@
       <div class="thumbnail" style="margin: 0px 100px;">
         <img src="/avatars/default.png">
       </div>
+      {{#if isStarted}}
+      <div class="progress" style="margin: 10px 100px;">
+        <div class="progress-bar" role="progressbar" aria-valuenow="{{battleInfo.users.[1].currentHp}}" aria-valuemin="0" aria-valuemax="100" style="width: {{battleInfo.users.[1].currentHp}}%;">
+          <span class="sr-only">{{battleInfo.users.[1].currentHp}} HP left</span>
+        </div>
+      </div>
+      {{/if}}
     </div>
   </div>
   {{#if isStarted}}
   <div class="row">
-    <p id="key">{{battleInfo.battleText}}</p>
-    <input type="text" class="txtbox">
+    <hr/>
+    <div style="margin: 0px 30px;">
+      <div class="panel-body">
+        <p class="form-control" id="key">{{battleInfo.battleText}}</p>
+        <input class="form-control txtbox" type="text">
+      </div>
+    </div>
   </div>
   {{/if}}
 </template>

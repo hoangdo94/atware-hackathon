@@ -54,6 +54,20 @@ let BattleSchema = new SimpleSchema({
     autoform: {
       omit: true
     }
+  },
+  battleTextArr: {
+    type: [String],
+    optional: true,
+    autoform: {
+      omit: true
+    }
+  },
+  winnerId: {
+    type: String,
+    optional: true,
+    autoform: {
+      omit: true
+    }
   }
 });
 
@@ -68,15 +82,19 @@ let BattleUserSchema = new SimpleSchema({
   },
   "wpm": {
     type: Number,
-    defaultValue: 0,
+    defaultValue: 0
   },
   "accuracy": {
     type: Number,
-    defaultValue: 0,
+    defaultValue: 0
   },
-  "result": {
-    type: Number, //0 - lose, 1 - draw, 2 - win,
-    optional: true
+  "currentHp": {
+    type: Number,
+    defaultValue: 100
+  },
+  "wordsCompleted": {
+    type: Number,
+    defaultValue: 0
   }
 });
 
