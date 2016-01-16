@@ -8,7 +8,8 @@ Accounts.onCreateUser((options, user) => {
     GameProfile.insert({
       userId: user._id,
       nickname: options.profile.nickname || 'Vodkar',
-      modelsOwned: [defaultModel._id]
+      modelsOwned: [defaultModel._id],
+      currentModel: defaultModel._id
     });
   }
   return user;

@@ -8,9 +8,11 @@
     <div class="col-md-4 text-center">
       <h4>
       {{#if battleInfo.users.[0]}}
-        <a href="/user/{{battleInfo.users.[0].userId}}">{{userNickname battleInfo.users.[0].userId}}</a>
+        <h3><a href="/user/{{battleInfo.users.[0].userId}}">{{userNickname battleInfo.users.[0].userId}}</a></h3>
+        <h5>the <b>{{userVodkarClass battleInfo.users.[0].userId}}</b></h5>
       {{else}}
-        Vodkar #1
+        <h3>Vodkar #1</h3>
+        <h5>&nbsp;</h5>
       {{/if}}
       </h4>
       <div class="thumbnail" style="margin: 0px 100px;">
@@ -60,9 +62,11 @@
     <div class="col-md-4 text-center">
       <h4>
       {{#if battleInfo.users.[1]}}
-        <a href="/user/{{battleInfo.users.[1].userId}}">{{userNickname battleInfo.users.[1].userId}}</a>
+        <h3><a href="/user/{{battleInfo.users.[1].userId}}">{{userNickname battleInfo.users.[1].userId}}</a></h3>
+        <h5>the <b>{{userVodkarClass battleInfo.users.[1].userId}}</b></h5>
       {{else}}
-        Vodkar #2
+        <h3>Vodkar #2</h3>
+        <h5>&nbsp;</h5>
       {{/if}}
       </h4>
       <div class="thumbnail" style="margin: 0px 100px;">
@@ -92,7 +96,7 @@
     <div style="margin: 0px 30px;">
       <div class="jumbotron">
         <p id="key">{{battleInfo.battleText}}</p>
-        <input class="form-control txtbox" type="text">
+        <input class="form-control txtbox" type="text" autofocus>
       </div>
     </div>
   </div>

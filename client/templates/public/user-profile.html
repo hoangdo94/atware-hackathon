@@ -4,13 +4,14 @@
   <div class="col-md-6 col-sm-8 col-md-offset-3 col-sm-offset-2">
     <div class="card hovercard">
       <div class="card-background">
-        <img class="card-bkimg" alt="" src="{{gameProfile.modelImgUrl}}">
+        <img class="card-bkimg" alt="" src="{{userVodkarModel currentUser._id}}">
       </div>
       <div class="useravatar">
-        <img alt="" src="{{gameProfile.modelImgUrl}}">
+        <img alt="" src="{{userVodkarModel currentUser._id}}">
       </div>
-      <div class="card-info"> <span class="card-title">{{gameProfile.nickname}}</span>
-
+      <div class="card-info">
+        <span class="card-title">{{gameProfile.nickname}}</span><br>
+        the <b>{{userVodkarClass currentUser._id}}</b>
       </div>
     </div>
     <div class="btn-pref btn-group btn-group-justified btn-group-lg" role="group" aria-label="...">
