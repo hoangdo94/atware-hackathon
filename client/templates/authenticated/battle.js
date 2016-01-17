@@ -9,7 +9,7 @@ Template.battle.onCreated(() => {
   correct = 0;
   index = 0;
 
-  Tracker.autorun(function () {
+  Template.instance().autorun(function () {
     if (Battle.findOne()){
       var battle = Battle.findOne();
       var endTime = battle.endTime;
@@ -37,6 +37,16 @@ Template.battle.onCreated(() => {
             }
           });
         }
+      }
+    }
+  });
+
+  Template.instance().autorun(() => {
+    var subsReady = FlowRouter.subsReady();
+    if (subsReady) {
+      if (!Battle.findOne()) {
+        console.log('not found');
+        BlazeLayout.render( 'default', { yield: 'notFound' } );
       }
     }
   });

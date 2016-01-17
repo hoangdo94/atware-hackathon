@@ -1,5 +1,13 @@
 Template.userProfile.onCreated(() => {
-
+  Template.instance().autorun(() => {
+    var subsReady = FlowRouter.subsReady();
+    if (subsReady) {
+      if (!Meteor.users.findOne(FlowRouter.getParam('id'))) {
+        console.log('not found');
+        BlazeLayout.render( 'default', { yield: 'notFound' } );
+      }
+    }
+  });
 });
 
 Template.userProfile.helpers({

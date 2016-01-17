@@ -7,7 +7,10 @@ const handleRedirect = (routes, redirect) => {
 };
 
 Template.default.helpers({
-  loggingIn() {
+  subscribing() {
+      return !FlowRouter.subsReady();
+    },
+    loggingIn() {
       return Meteor.loggingIn();
     },
     authenticated() {
