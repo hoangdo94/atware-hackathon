@@ -23,27 +23,33 @@ Template.battle.onCreated(() => {
         if (battle.users[0].wordsCompleted > wc0){
           console.log('0 attack');
           wc0 = battle.users[0].wordsCompleted;
+          $('#vk0').addClass('active hit');
           $('#vk0 > img').addClass('animated wobble');
           $('#vk0 > img').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
             $('#vk0 > img').removeClass('animated wobble');
+            $('#vk0').removeClass('active hit');
           });
 
           $('#vk1 > img').addClass('animated tada');
+          $('#vk1').addClass('active hitted');
           $('#vk1 > img').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
             $('#vk1 > img').removeClass('animated tada');
+            $('#vk1').removeClass('active hitted');
           });
         }
         if (battle.users[1].wordsCompleted > wc1){
           wc1 = battle.users[1].wordsCompleted;
-          console.log('1 attack');
           $('#vk1 > img').addClass('animated wobble');
+          $('#vk1').addClass('active hit');
           $('#vk1 > img').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
             $('#vk1 > img').removeClass('animated wobble');
+            $('#vk1').removeClass('active hit');
           });
-
+           $('#vk0').addClass('active hitted');
           $('#vk0 > img').addClass('animated tada');
           $('#vk0 > img').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
             $('#vk0 > img').removeClass('animated tada');
+             $('#vk0').removeClass('active hitted');
           });
         }
       }

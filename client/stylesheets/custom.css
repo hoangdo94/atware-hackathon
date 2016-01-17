@@ -89,3 +89,13 @@
 .btn-pref .btn {
   -webkit-border-radius:0 !important;
 }
+.hvr-ripple-out.active:before {
+  -webkit-animation-name:hvr-ripple-out;
+  animation-name:hvr-ripple-out
+}
+.hitted:before {
+  border: red solid 6px !important; 
+}
+.hit:before {
+  border: green solid 6px !important;
+}
