@@ -35,13 +35,18 @@ Meteor.methods({
     },
     startBattle(argument) {
       check(argument, Object);
-      var test = "Leicester City returned to the top of the Premier League as they drew away to struggling Aston Villa.";
+      var text = "dummy";
+      if (Meteor.isServer) {
+        var length = Math.round(Math.random()*15 +15);
+        var randomWords = Meteor.npmRequire('random-words');
+        text = randomWords({exactly: length, join: ' '});
+      }
       try {
         var documentId = Battle.update(argument.battleId, {
           $set: {
             startTime: Date.now(),
-            battleText: test,
-            battleTextArr: test.split(' ')
+            battleText: text,
+            battleTextArr: text.split(' ')
           }
         });
         // Update the 2 player's game played
@@ -243,6 +248,16 @@ Meteor.methods({
         return points;
       } catch (exception) {
         return exception;
+      }
+    },
+    generateRandomText: (length) => {
+      check(length, Number);
+      if (Meteor.isServer) {
+        var randomWords = Meteor.npmRequire('random-words');
+        var text = randomWords({exactly: length, join: ' '});
+        return text;
+      } else {
+        return 'dummy dummy';
       }
     }
 });
