@@ -15,69 +15,77 @@ Template.battle.onCreated(() => {
   wc1 = 0;
   isSummarySent = false;
 
-  Template.instance().autorun(function () {
-    if (Battle.findOne()){
+  Template.instance().autorun(function() {
+    if (Battle.findOne()) {
       var battle = Battle.findOne();
       var endTime = battle.endTime;
-      if (battle.users.length === 2){
-        if (battle.users[0].wordsCompleted > wc0){
+
+      //animation
+      if (battle.users.length === 2) {
+        if (battle.users[0].wordsCompleted > wc0) {
           console.log('0 attack');
           wc0 = battle.users[0].wordsCompleted;
           $('#vk0').addClass('active hit');
           $('#vk0 > img').addClass('animated wobble');
-          $('#vk0 > img').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+          $('#vk0 > img').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
             $('#vk0 > img').removeClass('animated wobble');
             $('#vk0').removeClass('active hit');
           });
 
           $('#vk1 > img').addClass('animated tada');
           $('#vk1').addClass('active hitted');
-          $('#vk1 > img').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+          $('#vk1 > img').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
             $('#vk1 > img').removeClass('animated tada');
             $('#vk1').removeClass('active hitted');
           });
         }
-        if (battle.users[1].wordsCompleted > wc1){
+        if (battle.users[1].wordsCompleted > wc1) {
           wc1 = battle.users[1].wordsCompleted;
           $('#vk1 > img').addClass('animated wobble');
           $('#vk1').addClass('active hit');
-          $('#vk1 > img').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+          $('#vk1 > img').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
             $('#vk1 > img').removeClass('animated wobble');
             $('#vk1').removeClass('active hit');
           });
            $('#vk0').addClass('active hitted');
           $('#vk0 > img').addClass('animated tada');
-          $('#vk0 > img').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+          $('#vk0 > img').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
             $('#vk0 > img').removeClass('animated tada');
              $('#vk0').removeClass('active hitted');
           });
         }
       }
-      
-      if (!isSummarySent && endTime && battle.users.length){
-        var userIndex = (Meteor.userId() === battle.users[0].userId) ? 0 : 1;
-        if (endTime && battle.users[userIndex] && !battle.users[userIndex].accuracy){
+
+      //send summary
+      if (!isSummarySent && endTime && battle.users.length) {
+        var userIndex = -1;
+        if (Meteor.userId() === battle.users[0].userId) userIndex = 0;
+        if (Meteor.userId() === battle.users[1].userId) userIndex = 1;
+
+        if (endTime && battle.users[userIndex] && !battle.users[userIndex].accuracy) {
           // Send this user's battle stats to the server
-          var accuracy;
-          if (total !== 0){
-            accuracy = correct / total;
-          } else {
-            accuracy = 0;
-          }
-          var requestObject = {
-            battleId: FlowRouter.getParam('id'),
-            userId: Meteor.userId(),
-            accuracy: Math.round(accuracy * 100) / 100
-          };
-          isSummarySent = true;
-          Meteor.call('sendBattleSummary', requestObject, (err, points) => {
-            if (err) console.error(err);
-            if (battle.users[userIndex].result === 'win'){
-              Bert.alert('You won this battle!<br> <img src="/images/coins.png" width="24px"/> ' + points + ' awarded.', 'info', 'growl-top-right');
+          if (userIndex !== -1) {
+            var accuracy;
+            if (total !== 0) {
+              accuracy = correct / total;
             } else {
-              Bert.alert('You lost this battle!<br> <img src="/images/coins.png" width="24px"/> ' + points + ' awarded.', 'info', 'growl-top-right');
+              accuracy = 0;
             }
-          });
+            var requestObject = {
+              battleId: FlowRouter.getParam('id'),
+              userId: Meteor.userId(),
+              accuracy: Math.round(accuracy * 100) / 100
+            };
+            isSummarySent = true;
+            Meteor.call('sendBattleSummary', requestObject, (err, points) => {
+              if (battle.users[userIndex].result === 'win') {
+                Bert.alert('You won this battle!<br> <img src="/images/coins.png" width="24px"/> ' + points + ' awarded.', 'info', 'growl-top-right');
+              } else {
+                Bert.alert('You lost this battle!<br> <img src="/images/coins.png" width="24px"/> ' + points + ' awarded.', 'info', 'growl-top-right');
+              }
+            });
+          }
+
         }
       }
     }
@@ -88,7 +96,9 @@ Template.battle.onCreated(() => {
     if (subsReady) {
       if (!Battle.findOne()) {
         console.log('not found');
-        BlazeLayout.render( 'default', { yield: 'notFound' } );
+        BlazeLayout.render('default', {
+          yield: 'notFound'
+        });
       }
     }
   });

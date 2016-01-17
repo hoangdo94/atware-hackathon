@@ -1,7 +1,6 @@
 Meteor.methods({
   joinBattle(argument) {
       check(argument, Object);
-
       try {
         var documentId = Battle.update(argument.battleId, {
           $addToSet: {
@@ -173,9 +172,12 @@ Meteor.methods({
           if (users[0].userId === argument.userId) {
             player = 0;
             opponent = 1;
-          } else {
+          } else if (users[1].userId === argument.userId){
             player = 1;
             opponent = 0;
+          } else {
+            console.log('break');
+            return null;
           }
         }
         if (player === 0) {
@@ -248,16 +250,6 @@ Meteor.methods({
         return points;
       } catch (exception) {
         return exception;
-      }
-    },
-    generateRandomText: (length) => {
-      check(length, Number);
-      if (Meteor.isServer) {
-        var randomWords = Meteor.npmRequire('random-words');
-        var text = randomWords({exactly: length, join: ' '});
-        return text;
-      } else {
-        return 'dummy dummy';
       }
     }
 });
