@@ -93,6 +93,9 @@
   -webkit-animation-name:hvr-ripple-out;
   animation-name:hvr-ripple-out
 }
+.hvr-ripple-out {
+  display: block !important;
+}
 .hitted:before {
   border: red solid 6px !important; 
 }
