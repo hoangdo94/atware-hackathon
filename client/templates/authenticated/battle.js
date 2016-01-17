@@ -2,18 +2,53 @@ var t = '';
 var total = 0;
 var correct = 0;
 var index = 0;
+var wc0 = 0;
+var wc1 = 0;
+var isSummarySent = false;
 
 Template.battle.onCreated(() => {
   t = '';
   total = 0;
   correct = 0;
   index = 0;
+  wc0 = 0;
+  wc1 = 0;
+  isSummarySent = false;
 
   Template.instance().autorun(function () {
     if (Battle.findOne()){
       var battle = Battle.findOne();
       var endTime = battle.endTime;
-      if (endTime && battle.users.length){
+      if (battle.users.length === 2){
+        if (battle.users[0].wordsCompleted > wc0){
+          console.log('0 attack');
+          wc0 = battle.users[0].wordsCompleted;
+          $('#vk0 > img').addClass('animated wobble');
+          $('#vk0 > img').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+            $('#vk0 > img').removeClass('animated wobble');
+          });
+
+          $('#vk1 > img').addClass('animated tada');
+          $('#vk1 > img').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+            $('#vk1 > img').removeClass('animated tada');
+          });
+        }
+        if (battle.users[1].wordsCompleted > wc1){
+          wc1 = battle.users[1].wordsCompleted;
+          console.log('1 attack');
+          $('#vk1 > img').addClass('animated wobble');
+          $('#vk1 > img').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+            $('#vk1 > img').removeClass('animated wobble');
+          });
+
+          $('#vk0 > img').addClass('animated tada');
+          $('#vk0 > img').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+            $('#vk0 > img').removeClass('animated tada');
+          });
+        }
+      }
+      
+      if (!isSummarySent && endTime && battle.users.length){
         var userIndex = (Meteor.userId() === battle.users[0].userId) ? 0 : 1;
         if (endTime && battle.users[userIndex] && !battle.users[userIndex].accuracy){
           // Send this user's battle stats to the server
@@ -28,6 +63,7 @@ Template.battle.onCreated(() => {
             userId: Meteor.userId(),
             accuracy: Math.round(accuracy * 100) / 100
           };
+          isSummarySent = true;
           Meteor.call('sendBattleSummary', requestObject, (err, points) => {
             if (err) console.error(err);
             if (battle.users[userIndex].result === 'win'){
