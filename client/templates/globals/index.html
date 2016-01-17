@@ -1,21 +1,10 @@
 <template name="index">
-  <div class="jumbotron text-center" style="padding: 30px;">
+  <div class="jumbotron">
     <h2>Welcome to Vodkars Battle!</h2>
-    <div class="row ">
-      <div class="col-sm-4">
-        <h3>Fast</h3>
-        <p>Realtime web app provide super fast & smooth responses</p>
-      </div>
-      <div class="col-sm-4">
-        <h3>Fun</h3>
-        <p>Take part in a typing match as a 1vs1 battle</p>
-      </div>
-      <div class="col-sm-4">
-        <h3>Motivative</h3>
-        <p>Multiplayer – ability to compete with other people all around the world</p>
-      </div>
-    </div>
-    <p><a class="btn btn-primary btn-lg" href="#" role="button">How to play? »</a></p>
+    <p><b>• Fast</b> - Realtime web app provide super fast & smooth responses</p>
+    <p><b>• Fun</b> - Take part in a typing match as a 1vs1 battle</p>
+    <p><b>• Motivative</b> - Ability to compete with other people all around the world</p>
+    <!-- <p><a class="btn btn-primary btn-lg" href="#" role="button">How to play? »</a></p> -->
   </div>
   <div class="row equal">
 
@@ -27,13 +16,16 @@
         <div class="panel-body">
           <table class="table table-hover">
             <tbody>
-              {{#each waitingBattles}}
+              {{#each rankings}}
               <tr>
                 <td>
-                  <a href="/battle/{{_id}}">{{title}}</a>
+                  <a href="/user/{{userId}}"><b>{{nickname}}</b></a> the <b>{{userVodkarClass userId}}</b>
                 </td>
                 <td>
-                  <a href="/battle/{{_id}}" class="btn btn-sm btn-success pull-right">Profile</a>
+                  <img src="/images/coins.png" width="24px"/> {{points}}
+                </td>
+                <td>
+                  <a href="/user/{{userId}}" class="btn btn-sm btn-success pull-right">Profile</a>
                 </td>
               </tr>
               {{else}}
