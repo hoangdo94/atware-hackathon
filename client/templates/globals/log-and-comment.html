@@ -3,7 +3,7 @@
 
     <!-- Nav pills -->
     <ul class="nav nav-pills" role="tablist">
-      <li role="presentation" class="active"><a href="#comments" aria-controls="home" role="tab" data-toggle="tab">Comment</a></li>
+      <li role="presentation" class="active"><a href="#comments" aria-controls="home" role="tab" data-toggle="tab">Comments</a></li>
       <li role="presentation"><a href="#texts" aria-controls="profile" role="tab" data-toggle="tab">Battle Text</a></li>
       <li role="presentation"><a href="#logs" aria-controls="profile" role="tab" data-toggle="tab">Battle Log</a></li>
     </ul>
@@ -12,10 +12,10 @@
     <div class="panel panel-default">
       <div class="panel-body">
         <div class="tab-content">
-          <div role="tabpanel" class="tab-pane active" id="comments">
+          <div role="tabpanel" class="tab-pane fade in active" id="comments">
             {{> commentsBox id=battleInfo._id}}
           </div>
-          <div role="tabpanel" class="tab-pane active" id="texts">
+          <div role="tabpanel" class="tab-pane fade" id="texts">
             {{#if battleInfo.battleText}}
               <div class="well">{{battleInfo.battleText}}</div>
               <p>Total: <b>{{battleInfo.battleTextArr.length}}</b> words</p>
@@ -23,7 +23,7 @@
               <div class="well">Battle has not started!</div>
             {{/if}}
           </div>
-          <div role="tabpanel" class="tab-pane" id="logs">
+          <div role="tabpanel" class="tab-pane fade" id="logs">
             <br />
             <div>
               <ul class="reverse">
