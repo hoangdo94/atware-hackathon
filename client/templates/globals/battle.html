@@ -17,19 +17,22 @@
 
     </div>
     <div class="col-md-4">
-      <h2 class="text-center">{{battleInfo.title}}</h2>
+      <div class="text-center">
+        <h2>{{battleInfo.title}}</h2>
+      </div>
       <hr /> {{#unless isStarted}}
       <!-- Not started -->
-      <br />
-      <br />
       <br /> {{#if currentUser}} {{#if isCreator}} {{#if isReady}}
       <btn class="btn btn-block btn-success btn-start-battle">Start Battle!</btn>
       {{else}}
       <btn class="btn btn-block btn-success" disabled>Start Battle!</btn>
       {{/if}} {{else}} {{#if isJoined}}
       <btn class="btn btn-block btn-danger btn-leave-battle">Leave Battle</btn>
+      {{else}} {{#if isReady}}
+      <btn class="btn btn-block btn-info" disabled>Join Battle</btn>
       {{else}}
       <btn class="btn btn-block btn-info btn-join-battle">Join Battle</btn>
+      {{/if}}
       {{/if}} {{/if}} {{/if}}
       <br />
       <div class="text-center">
@@ -38,26 +41,34 @@
       </div>
       <br /> {{else}}
       <!-- Started -->
-
-      {{/unless}} {{#if isEnded}}
+      {{#unless isEnded}}
+      <!-- <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Battle Texts: {{battleInfo.battleTextArr.length}} Words</h3>
+        </div>
+        <div class="panel-body">
+          {{battleInfo.battleText}}
+        </div>
+      </div> -->
+      {{/unless}} {{/unless}} {{#if isEnded}}
       <div class="row">
         <div class="col-sm-3">
           <h4>{{{resultHtml battleInfo.users.[0].result}}}</h4>
           <p><span style="font-weight: bold;">{{battleInfo.users.[0].wordsCompleted}}</span></p>
-          <p><span style="font-weight: bold;">{{showPercentage battleInfo.users.[0].accuracy}}</span></p>
           <p><span style="font-weight: bold;">{{battleInfo.users.[0].wpm}}</span></p>
+          <p><span style="font-weight: bold;">{{showPercentage battleInfo.users.[0].accuracy}}</span></p>
         </div>
         <div class="col-sm-6 text-center">
           <h4>RESULT</h4>
           <p>Words typed</p>
+          <p>Words per Minute</p>
           <p>Accuracy</p>
-          <p>WPM</p>
         </div>
         <div class="col-sm-3 text-right">
           <h4>{{{resultHtml battleInfo.users.[1].result}}}</h4>
           <p><span style="font-weight: bold;">{{battleInfo.users.[1].wordsCompleted}}</span></p>
-          <p><span style="font-weight: bold;">{{showPercentage battleInfo.users.[1].accuracy}}</span></p>
           <p><span style="font-weight: bold;">{{battleInfo.users.[1].wpm}}</span></p>
+          <p><span style="font-weight: bold;">{{showPercentage battleInfo.users.[1].accuracy}}</span></p>
         </div>
       </div>
       {{/if}}
@@ -86,7 +97,8 @@
   </div>
   <hr/>
   <div class="row">
-    {{#if isStarted}}{{#if isJoined}}{{#unless isEnded}}
+    {{#if isStarted}}{{#if isJoined}}
+    {{#unless isEnded}}
     <div style="margin: 0px 30px;">
       <div class="jumbotron">
         <p id="key">{{battleInfo.battleText}}</p>
@@ -94,31 +106,11 @@
       </div>
     </div>
     {{else}}
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <h3 class="text-center">Battle Logs</h3>
-        <div style="max-height:200px; overflow-y:scroll">
-          <ul class="reverse">
-            {{#each battleInfo.battleLog}}
-            <li><b>{{beatifyTime time}}: {{userNickname userId}}</b> {{{battleLogMessage this}}}</li>
-            {{/each}}
-          </ul>
-        </div>
-      </div>
-    </div>
-    {{/unless}}{{/if}} {{else}}
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <h3 class="text-center">Battle Logs</h3>
-        <div style="max-height:200px; overflow-y:scroll">
-          <ul class="reverse">
-            {{#each battleInfo.battleLog}}
-            <li><b>{{beatifyTime time}}: {{userNickname userId}}</b> {{{battleLogMessage this}}}</li>
-            {{/each}}
-          </ul>
-        </div>
-      </div>
-    </div>
+    {{> logAndComment}}
+    {{/unless}}
+    {{else}}
+    {{> logAndComment}}
+    {{/if}}
     {{/if}}
   </div>
   {{else}}

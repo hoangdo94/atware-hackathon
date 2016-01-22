@@ -37,14 +37,14 @@ Meteor.methods({
       //- If battle didn't start
       if (!battle) return null;
       if (!battle.startTime) {
-        console.log('battle didn\'t start');
+        //console.log('battle didn\'t start');
         //+ creator leaves: destroy the battle
         if (battle.creatorId === argument.userId) {
-          console.log('creator leaves: destroy the battle');
+          //console.log('creator leaves: destroy the battle');
           return Battle.remove(argument.battleId);
         }
         //+ else just remove user from users array
-        console.log('else just remove user from users array');
+        //console.log('else just remove user from users array');
         if (battle.users[1] && battle.users[1].userId === argument.userId) {
           return Battle.update(argument.battleId, {
             $pull: {
@@ -64,7 +64,7 @@ Meteor.methods({
         }
 
       } else if (!battle.endTime) { //- If battle started: finish the battle, and set leaving user to loser
-        console.log('battle started, but didn\'t finnish: finish the battle, and set leaving user to loser');
+        //console.log('battle started, but didn\'t finnish: finish the battle, and set leaving user to loser');
         var time = Date.now();
         var playerIndex;
         if (battle.users[0].userId === argument.userId) playerIndex = 0;
@@ -73,7 +73,7 @@ Meteor.methods({
 
         if (playerIndex === 0) {
           //first player leaves the battle
-          console.log('first player leaves the battle');
+          //console.log('first player leaves the battle');
           Battle.update(argument.battleId, {
             $set: {
               'endTime': time,
@@ -100,7 +100,7 @@ Meteor.methods({
           });
         } else {
           //second player leaves the battle
-          console.log('second player leaves the battle');
+          //console.log('second player leaves the battle');
           Battle.update(argument.battleId, {
             $set: {
               'endTime': time,
@@ -131,7 +131,7 @@ Meteor.methods({
     },
     startBattle(argument) {
       check(argument, Object);
-      console.log(argument);
+      //console.log(argument);
       var text = "";
       if (Meteor.isServer) {
         var length = Math.round(Math.random() * 15 + 15);
@@ -307,7 +307,7 @@ Meteor.methods({
 
 var calculateAndUpdateUserProfile = (argument, isLeft) => {
   try {
-    console.log(argument, isLeft);
+    //console.log(argument, isLeft);
     var users, player, opponent, points, accuracy, wpm;
     var playerGP, newAvgWPM, newAvgAccuracy, gameProfileModifier;
     var battle = Battle.findOne(argument.battleId);
@@ -325,7 +325,7 @@ var calculateAndUpdateUserProfile = (argument, isLeft) => {
       player = 1;
       opponent = 0;
     } else {
-      console.log('break');
+      //console.log('break');
       return null;
     }
 

@@ -11,7 +11,9 @@ Template.battle.onCreated(() => {
   Template.instance().autorun(function() {
     if (Battle.findOne()) {
       var battle = Battle.findOne();
+      var startTime = battle.startTime;
       var endTime = battle.endTime;
+
       //send summary
       if (!isSummarySent && endTime && battle.users.length) {
         var userIndex = -1;
@@ -41,7 +43,6 @@ Template.battle.onCreated(() => {
               }
             });
           }
-
         }
       }
     }
@@ -85,36 +86,6 @@ Template.battle.helpers({
       return !!b.endTime;
     }
     return false;
-  },
-  battleLogMessage: (log) => {
-    var mess;
-    switch (log.action) {
-      case ACTION.CREATE_BATTLE:
-        mess = 'created the battle.';
-        break;
-      case ACTION.START_BATTLE:
-        mess = 'started the battle.';
-        break;
-      case ACTION.JOIN_BATTLE:
-        mess = 'joined the battle.';
-        break;
-      case ACTION.LEAVE_BATTLE:
-          mess = 'left the battle.';
-          break;
-      case ACTION.END_BATTLE:
-        if (log.word) {
-          mess = 'ended the battle with the last word: <b>"'+ log.word +'"</b> and became the winner, congrats!!';
-        } else {
-          mess = '<b>Battle ended!</b>.';
-        }
-        break;
-      case ACTION.ATTACK:
-        mess = 'attacked with the word: <b>"' +log.word+ '"</b>, dealt <b>' + Math.round(log.value*100)/100 + '</b> damages.';
-        break;
-      default:
-        mess = 'Unkown.';
-    }
-    return mess;
   },
   resultHtml: (text) => {
     if (text === 'win') {
@@ -211,4 +182,8 @@ Template.battle.events({
       }
     }
   }
+});
+
+Template.battle.onRendered(() => {
+  $('[data-toggle="popover"]').popover();
 });

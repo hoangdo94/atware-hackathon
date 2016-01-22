@@ -1,0 +1,41 @@
+<template name="logAndComment">
+  <div class="col-md-10 col-md-offset-1">
+
+    <!-- Nav pills -->
+    <ul class="nav nav-pills" role="tablist">
+      <li role="presentation" class="active"><a href="#comments" aria-controls="home" role="tab" data-toggle="tab">Comment</a></li>
+      <li role="presentation"><a href="#texts" aria-controls="profile" role="tab" data-toggle="tab">Battle Text</a></li>
+      <li role="presentation"><a href="#logs" aria-controls="profile" role="tab" data-toggle="tab">Battle Log</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane active" id="comments">
+            {{> commentsBox id=battleInfo._id}}
+          </div>
+          <div role="tabpanel" class="tab-pane active" id="texts">
+            {{#if battleInfo.battleText}}
+              <div class="well">{{battleInfo.battleText}}</div>
+              <p>Total: <b>{{battleInfo.battleTextArr.length}}</b> words</p>
+            {{else}}
+              <div class="well">Battle has not started!</div>
+            {{/if}}
+          </div>
+          <div role="tabpanel" class="tab-pane" id="logs">
+            <br />
+            <div>
+              <ul class="reverse">
+                {{#each battleInfo.battleLog}}
+                <li><b>{{beatifyTime time}}: <a href="/user/{{userId}}">{{userNickname userId}}</a></b> {{{battleLogMessage this}}}</li>
+                {{/each}}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</template>

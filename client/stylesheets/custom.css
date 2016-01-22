@@ -120,3 +120,8 @@ ul.reverse > li {
 ul.reverse > li:nth-child(odd) {
   background-color: #d3d3d3;
 }
+
+/*Comments*/
+.comments-box {
+  max-width: 100%;
+}

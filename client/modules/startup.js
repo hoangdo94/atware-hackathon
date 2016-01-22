@@ -1,6 +1,8 @@
 let startup = () => {
   //some global variables;
   var t, total, correct, index, wc0, wc1, isSummarySent;
+
+  //leave battle
   var hotcodepush = false;
   Reload._onMigrate(function() {
     hotcodepush = true;
@@ -27,6 +29,12 @@ let startup = () => {
       }
     }
   });
+
+  //comment
+  Comments.ui.config({
+    template: 'bootstrap' // or ionic, semantic-ui
+  });
+
 };
 
 Modules.client.startup = startup;
