@@ -132,11 +132,15 @@ ul.reverse > li:nth-child(odd) {
 .vodkar-model {
   position: relative;
   animation-duration: 0.2s;
+  -o-animation-duration: 0.2s;
+  -ms-animation-duration: 0.2s;
   -moz-animation-duration: 0.2s;
   -webkit-animation-duration: 0.2s;
 }
 .vodkar-model img {
   animation-duration: 0.2s;
+  -o-animation-duration: 0.2s;
+  -ms-animation-duration: 0.2s;
   -moz-animation-duration: 0.2s;
   -webkit-animation-duration: 0.2s;
 }
@@ -149,11 +153,15 @@ ul.reverse > li:nth-child(odd) {
   right: 0;
   fill: gray;
   animation-duration: 0.2s;
+  -o-animation-duration: 0.2s;
+  -ms-animation-duration: 0.2s;
   -moz-animation-duration: 0.2s;
   -webkit-animation-duration: 0.2s;
 }
 .loser {
   filter: grayscale(100%);
+  -o-filter: grayscale(100%);
+  -ms-filter: grayscale(100%);
   -moz-filter: grayscale(100%);
   -webkit-filter: grayscale(100%);
 }
