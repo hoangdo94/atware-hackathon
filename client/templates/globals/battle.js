@@ -102,10 +102,14 @@ Template.battle.helpers({
           mess = 'left the battle.';
           break;
       case ACTION.END_BATTLE:
-        mess = '<b>Battle ended!</b>.';
+        if (log.word) {
+          mess = 'ended the battle with the last word: <b>"'+ log.word +'"</b> and became the winner, congrats!!';
+        } else {
+          mess = '<b>Battle ended!</b>.';
+        }
         break;
       case ACTION.ATTACK:
-        mess = 'attacked with the word <b>"' +log.word+ '"</b>, dealt <b>' + Math.round(log.value*100)/100 + '</b> damages.';
+        mess = 'attacked with the word: <b>"' +log.word+ '"</b>, dealt <b>' + Math.round(log.value*100)/100 + '</b> damages.';
         break;
       default:
         mess = 'Unkown.';

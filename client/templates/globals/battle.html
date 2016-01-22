@@ -1,10 +1,5 @@
 <template name="battle">
   {{#if battleInfo}}
-  <div class="row text-center">
-    <h2>{{battleInfo.title}}</h2>
-    <!-- <p>Battle #<b>{{battleInfo._id}}</b></p> -->
-    <hr />
-  </div>
   <div class="row">
     <div class="col-md-4 text-center">
       <h4>
@@ -19,18 +14,11 @@
           <span>{{mathRound battleInfo.users.[0].currentHp}}</span>
         </div>
       </div>
-      {{#if isEnded}}
-      <div class="result" style="margin: 10px 100px;">
-        <h4>{{{resultHtml battleInfo.users.[0].result}}}</h4>
-        <p>Words typed: <span style="font-weight: bold;">{{battleInfo.users.[0].wordsCompleted}}</span></p>
-        <p>Accuracy: <span style="font-weight: bold;">{{showPercentage battleInfo.users.[0].accuracy}}</span></p>
-        <p>WPM: <span style="font-weight: bold;">{{battleInfo.users.[0].wpm}}</span></p>
-      </div>
-      {{/if}}
 
     </div>
     <div class="col-md-4">
-      {{#unless isStarted}}
+      <h2 class="text-center">{{battleInfo.title}}</h2>
+      <hr /> {{#unless isStarted}}
       <!-- Not started -->
       <br />
       <br />
@@ -51,7 +39,28 @@
       <br /> {{else}}
       <!-- Started -->
 
-      {{/unless}}
+      {{/unless}} {{#if isEnded}}
+      <div class="row">
+        <div class="col-sm-3">
+          <h4>{{{resultHtml battleInfo.users.[0].result}}}</h4>
+          <p><span style="font-weight: bold;">{{battleInfo.users.[0].wordsCompleted}}</span></p>
+          <p><span style="font-weight: bold;">{{showPercentage battleInfo.users.[0].accuracy}}</span></p>
+          <p><span style="font-weight: bold;">{{battleInfo.users.[0].wpm}}</span></p>
+        </div>
+        <div class="col-sm-6 text-center">
+          <h4>RESULT</h4>
+          <p>Words typed</p>
+          <p>Accuracy</p>
+          <p>WPM</p>
+        </div>
+        <div class="col-sm-3 text-right">
+          <h4>{{{resultHtml battleInfo.users.[1].result}}}</h4>
+          <p><span style="font-weight: bold;">{{battleInfo.users.[1].wordsCompleted}}</span></p>
+          <p><span style="font-weight: bold;">{{showPercentage battleInfo.users.[1].accuracy}}</span></p>
+          <p><span style="font-weight: bold;">{{battleInfo.users.[1].wpm}}</span></p>
+        </div>
+      </div>
+      {{/if}}
     </div>
     <div class="col-md-4 text-center">
       <h4>
@@ -73,14 +82,6 @@
           <span>{{mathRound battleInfo.users.[1].currentHp}}</span>
         </div>
       </div>
-      {{#if isEnded}}
-      <div class="result" style="margin: 10px 100px;">
-        <h4>{{{resultHtml battleInfo.users.[1].result}}}</h4>
-        <p>Words typed: <span style="font-weight: bold;">{{battleInfo.users.[1].wordsCompleted}}</span></p>
-        <p>Accuracy: <span style="font-weight: bold;">{{showPercentage battleInfo.users.[1].accuracy}}</span></p>
-        <p>WPM: <span style="font-weight: bold;">{{battleInfo.users.[1].wpm}}</span></p>
-      </div>
-      {{/if}}
     </div>
   </div>
   <hr/>

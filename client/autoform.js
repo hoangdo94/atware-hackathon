@@ -18,7 +18,6 @@ AutoForm.hooks({
             action: ACTION.CREATE_BATTLE,
             value: 0
           });
-          console.log(doc);
           return doc;
         } else {
           return false;

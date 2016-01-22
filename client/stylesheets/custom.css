@@ -111,7 +111,12 @@ ul.reverse {
   flex-direction: column-reverse;
   overflow-y: scroll;
   overflow-x: hidden;
+  padding: 0px;
 }
 ul.reverse > li {
   flex: 0 0 auto;
+  list-style: none;
+}
+ul.reverse > li:nth-child(odd) {
+  background-color: #d3d3d3;
 }

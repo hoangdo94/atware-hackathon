@@ -187,6 +187,7 @@ Meteor.methods({
       try {
         var battle = Battle.findOne(argument.battleId);
         if (battle) {
+          var users = battle.users;
           if (battle.endTime) {
             return null;
           }
@@ -197,14 +198,15 @@ Meteor.methods({
             },
             $push: {
               'battleLog': {
-                userId: 0,
+                userId: (users[0].currentHp > users[1].currentHp)?users[0].userId:users[1].userId,
                 time: time,
                 action: ACTION.END_BATTLE,
-                value: 0
+                value: 0,
+                word: battle.battleTextArr[battle.battleTextArr.length - 1]
               }
             }
           });
-          var users = battle.users;
+
           var winnerId;
           if (users[0].currentHp > users[1].currentHp) {
             winnerId = users[0].userId;
