@@ -28,16 +28,14 @@ Template.battle.onCreated(() => {
             $('#vodkar-0 img').addClass('animated shake');
             $('#vodkar-0 img').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
               $(this).removeClass('animated shake');
+              if (wc0 <= 0) {
+                $('#vodkar-0 img').addClass('animated hinge loser');
+                $('#vodkar-0 img').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+                  $(this).removeClass('animated hinge loser');
+                });
+              }
             });
           });
-          if (wc0 <= 0) {
-            setTimeout(function() {
-              $('#vodkar-0 img').addClass('animated hinge');
-              $('#vodkar-0 img').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
-                $(this).removeClass('animated hinge');
-              });
-            }, 500);
-          }
         }
         if (users[1].currentHp < wc1) {
           //first user attack
@@ -48,16 +46,14 @@ Template.battle.onCreated(() => {
             $('#vodkar-1 img').addClass('animated shake');
             $('#vodkar-1 img').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
               $(this).removeClass('animated shake');
+              if (wc1 <= 0) {
+                $('#vodkar-1 img').addClass('animated hinge loser');
+                $('#vodkar-1 img').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+                  $(this).removeClass('animated hinge loser');
+                });
+              }
             });
           });
-          if (wc1 <= 0) {
-            setTimeout(function() {
-              $('#vodkar-1 img').addClass('animated hinge');
-              $('#vodkar-1 img').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
-                $(this).removeClass('animated hinge');
-              });
-            }, 500);
-          }
         }
       }
       //send summary

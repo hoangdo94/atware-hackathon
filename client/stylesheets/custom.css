@@ -135,6 +135,11 @@ ul.reverse > li:nth-child(odd) {
   -moz-animation-duration: 0.2s;
   -webkit-animation-duration: 0.2s;
 }
+.vodkar-model img {
+  animation-duration: 0.2s;
+  -moz-animation-duration: 0.2s;
+  -webkit-animation-duration: 0.2s;
+}
 .attack-effect {
   display: none;
   position: absolute;
@@ -146,4 +151,9 @@ ul.reverse > li:nth-child(odd) {
   animation-duration: 0.2s;
   -moz-animation-duration: 0.2s;
   -webkit-animation-duration: 0.2s;
+}
+.loser {
+  filter: grayscale(100%);
+  -moz-filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
 }
