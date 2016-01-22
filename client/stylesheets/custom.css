@@ -1,23 +1,24 @@
 .equal, .equal > div[class*='col-'] {
-    display: -webkit-flex;
-    display: flex;
-    flex:1 1 auto;
+  display: -webkit-flex;
+  display: flex;
+  flex: 1 1 auto;
 }
 .equal .panel {
   width: 100%;
 }
 
 /* USER PROFILE PAGE */
+
 .card {
   margin-top: 20px;
   padding: 30px;
   background-color: rgba(214, 224, 226, 0.2);
-  -webkit-border-top-left-radius:5px;
-  -moz-border-top-left-radius:5px;
-  border-top-left-radius:5px;
-  -webkit-border-top-right-radius:5px;
-  -moz-border-top-right-radius:5px;
-  border-top-right-radius:5px;
+  -webkit-border-top-left-radius: 5px;
+  -moz-border-top-left-radius: 5px;
+  border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  -moz-border-top-right-radius: 5px;
+  border-top-right-radius: 5px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -66,7 +67,7 @@
   right: 0;
 }
 .card.hovercard .card-info .card-title {
-  padding:0 5px;
+  padding: 0 5px;
   font-size: 20px;
   line-height: 1;
   color: #262626;
@@ -87,18 +88,30 @@
   margin-bottom: 17px;
 }
 .btn-pref .btn {
-  -webkit-border-radius:0 !important;
+  -webkit-border-radius: 0 !important;
 }
 .hvr-ripple-out.active:before {
-  -webkit-animation-name:hvr-ripple-out;
-  animation-name:hvr-ripple-out
+  -webkit-animation-name: hvr-ripple-out;
+  animation-name: hvr-ripple-out
 }
 .hvr-ripple-out {
   display: block !important;
 }
 .hitted:before {
-  border: red solid 6px !important; 
+  border: red solid 6px !important;
 }
 .hit:before {
   border: green solid 6px !important;
+}
+
+/*UL*/
+
+ul.reverse {
+  display: flex;
+  flex-direction: column-reverse;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+ul.reverse > li {
+  flex: 0 0 auto;
 }

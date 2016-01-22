@@ -1,0 +1,125 @@
+<template name="battle">
+  {{#if battleInfo}}
+  <div class="row text-center">
+    <h2>{{battleInfo.title}}</h2>
+    <!-- <p>Battle #<b>{{battleInfo._id}}</b></p> -->
+    <hr />
+  </div>
+  <div class="row">
+    <div class="col-md-4 text-center">
+      <h4>
+        <h3><a href="/user/{{battleInfo.users.[0].userId}}">{{userNickname battleInfo.users.[0].userId}}</a></h3>
+        <h5>the <b>{{userVodkarClass battleInfo.users.[0].userId}}</b></h5>
+      </h4>
+      <div class="thumbnail" style="margin: 0px 100px;">
+        <img src="{{userVodkarModel battleInfo.users.[0].userId}}">
+      </div>
+      <div class="progress" style="margin: 10px 100px;">
+        <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="{{battleInfo.users.[0].currentHp}}" aria-valuemin="0" aria-valuemax="100" style="width: {{battleInfo.users.[0].currentHp}}%;">
+          <span>{{mathRound battleInfo.users.[0].currentHp}}</span>
+        </div>
+      </div>
+      {{#if isEnded}}
+      <div class="result" style="margin: 10px 100px;">
+        <h4>{{{resultHtml battleInfo.users.[0].result}}}</h4>
+        <p>Words typed: <span style="font-weight: bold;">{{battleInfo.users.[0].wordsCompleted}}</span></p>
+        <p>Accuracy: <span style="font-weight: bold;">{{showPercentage battleInfo.users.[0].accuracy}}</span></p>
+        <p>WPM: <span style="font-weight: bold;">{{battleInfo.users.[0].wpm}}</span></p>
+      </div>
+      {{/if}}
+
+    </div>
+    <div class="col-md-4">
+      {{#unless isStarted}}
+      <!-- Not started -->
+      <br />
+      <br />
+      <br /> {{#if currentUser}} {{#if isCreator}} {{#if isReady}}
+      <btn class="btn btn-block btn-success btn-start-battle">Start Battle!</btn>
+      {{else}}
+      <btn class="btn btn-block btn-success" disabled>Start Battle!</btn>
+      {{/if}} {{else}} {{#if isJoined}}
+      <btn class="btn btn-block btn-danger btn-leave-battle">Leave Battle</btn>
+      {{else}}
+      <btn class="btn btn-block btn-info btn-join-battle">Join Battle</btn>
+      {{/if}} {{/if}} {{/if}}
+      <br />
+      <div class="text-center">
+        {{#unless isReady}} {{>loading}}
+        <br/> Waiting for other Vodkar... {{/unless}}
+      </div>
+      <br /> {{else}}
+      <!-- Started -->
+
+      {{/unless}}
+    </div>
+    <div class="col-md-4 text-center">
+      <h4>
+      {{#if battleInfo.users.[1]}}
+        <h3><a href="/user/{{battleInfo.users.[1].userId}}">{{userNickname battleInfo.users.[1].userId}}</a></h3>
+        <h5>the <b>{{userVodkarClass battleInfo.users.[1].userId}}</b></h5>
+      {{else}}
+        <h3>Vodkar #2</h3>
+        <h5>&nbsp;</h5>
+      {{/if}}
+      </h4>
+      <div class="thumbnail" style="margin: 0px 100px;">
+        {{#if battleInfo.users.[1]}}
+        <img src="{{userVodkarModel battleInfo.users.[1].userId}}"> {{else}}
+        <img src="/images/no-avatar.png"> {{/if}}
+      </div>
+      <div class="progress" style="margin: 10px 100px;">
+        <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="{{battleInfo.users.[1].currentHp}}" aria-valuemin="0" aria-valuemax="100" style="width: {{battleInfo.users.[1].currentHp}}%;">
+          <span>{{mathRound battleInfo.users.[1].currentHp}}</span>
+        </div>
+      </div>
+      {{#if isEnded}}
+      <div class="result" style="margin: 10px 100px;">
+        <h4>{{{resultHtml battleInfo.users.[1].result}}}</h4>
+        <p>Words typed: <span style="font-weight: bold;">{{battleInfo.users.[1].wordsCompleted}}</span></p>
+        <p>Accuracy: <span style="font-weight: bold;">{{showPercentage battleInfo.users.[1].accuracy}}</span></p>
+        <p>WPM: <span style="font-weight: bold;">{{battleInfo.users.[1].wpm}}</span></p>
+      </div>
+      {{/if}}
+    </div>
+  </div>
+  <hr/>
+  <div class="row">
+    {{#if isStarted}}{{#if isJoined}}{{#unless isEnded}}
+    <div style="margin: 0px 30px;">
+      <div class="jumbotron">
+        <p id="key">{{battleInfo.battleText}}</p>
+        <input class="form-control txtbox" type="text" autofocus>
+      </div>
+    </div>
+    {{else}}
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <h3 class="text-center">Battle Logs</h3>
+        <div style="max-height:200px; overflow-y:scroll">
+          <ul class="reverse">
+            {{#each battleInfo.battleLog}}
+            <li><b>{{beatifyTime time}}: {{userNickname userId}}</b> {{{battleLogMessage this}}}</li>
+            {{/each}}
+          </ul>
+        </div>
+      </div>
+    </div>
+    {{/unless}}{{/if}} {{else}}
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <h3 class="text-center">Battle Logs</h3>
+        <div style="max-height:200px; overflow-y:scroll">
+          <ul class="reverse">
+            {{#each battleInfo.battleLog}}
+            <li><b>{{beatifyTime time}}: {{userNickname userId}}</b> {{{battleLogMessage this}}}</li>
+            {{/each}}
+          </ul>
+        </div>
+      </div>
+    </div>
+    {{/if}}
+  </div>
+  {{else}}
+  <h3>Battle is destroyed or not exist!</h3> {{/if}}
+</template>

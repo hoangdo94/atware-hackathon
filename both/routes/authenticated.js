@@ -25,13 +25,3 @@ authenticatedRoutes.route( '/join-battle', {
     this.register('joinableBattlesSubs', Meteor.subscribe('joinableBattles'));
   }
 });
-
-authenticatedRoutes.route( '/battle/:id' , {
-  name: 'battle',
-  action(params) {
-    BlazeLayout.render( 'default', { yield: 'battle', battleId: params.id } );
-  },
-  subscriptions(params) {
-    this.register('battleSubs', Meteor.subscribe('battle', {battleId: params.id}));
-  }
-});

@@ -5,7 +5,7 @@ Template.registerHelper('userNickname', (userId) => {
   if (gp) {
     return gp.nickname;
   }
-  return 'Unknown Vodkar';
+  return '';
 });
 Template.registerHelper('userVodkarModel', (userId) => {
   var gp = GameProfile.findOne({
@@ -29,4 +29,6 @@ Template.registerHelper('showPercentage', (input) => {
     return (Math.round(input * 10000) / 100 + " %");
 });
 
-Template.registerHelper('beautifyDate', (date) => moment(date).format('MMM Do YYYY, h:mm:ss A'));
+Template.registerHelper('beatifyTime', (date) => moment(date).format('DD/MM/YYYY, HH:mm:ss')); //DD/MM/YYYY, HH:mm:ss
+
+Template.registerHelper('mathRound', (num) => Math.round(num*100)/100);

@@ -3,7 +3,9 @@
 	{{>header}}
 	<div class="container">
 		{{#if subscribing}}
-			{{> loading}}
+			<div class="text-center">
+				{{> loading}}
+			</div>
 		{{else}}
 		{{#if loggingIn}}
 			{{> loading}}

@@ -20,7 +20,7 @@ Meteor.publish('recentBattles', function(limit) {
     }
   }, {
     sort: {
-      endTime: 1
+      endTime: -1
     },
     limit: limit
   });

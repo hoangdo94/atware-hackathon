@@ -49,3 +49,26 @@ publicRoutes.route( '/user/:id' , {
     this.register('userProfileSubs', Meteor.subscribe('userProfile', {userId: params.id}));
   }
 });
+
+publicRoutes.route( '/battle/:id' , {
+  name: 'battle',
+  action(params) {
+    BlazeLayout.render( 'default', { yield: 'battle', battleId: params.id } );
+  },
+  subscriptions(params) {
+    this.register('battleSubs', Meteor.subscribe('battle', {battleId: params.id}));
+  },
+  triggersExit: [(context) => {
+    var accuracy = 0;
+    if (total !== 0) {
+      accuracy = correct / total;
+    } else {
+      accuracy = 1;
+    }
+    Meteor.call('leaveBattle', {
+      battleId: context.params.id,
+      userId: Meteor.userId(),
+      accuracy: accuracy
+    });
+  }]
+});

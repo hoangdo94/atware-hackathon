@@ -27,7 +27,6 @@ Template.default.helpers({
     redirectPublic() {
       return handleRedirect([
         'vodkar-shop',
-        'battle',
         'create-battle',
         'join-battle'
       ], '/login');

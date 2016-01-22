@@ -32,6 +32,14 @@ let BattleSchema = new SimpleSchema({
     },
     blackbox: true
   },
+  createTime: {
+    type: Date,
+    label: "Create time of the battle.",
+    optional: true,
+    autoform: {
+      omit: true
+    }
+  },
   startTime: {
     type: Date,
     label: "Start time of the battle.",
@@ -60,6 +68,14 @@ let BattleSchema = new SimpleSchema({
     optional: true,
     autoform: {
       omit: true
+  }
+  },
+  battleLog: {
+    type: [Object],
+    defaultValue: [],
+    blackbox: true,
+    autoform: {
+      omit: true
     }
   },
   winnerId: {
@@ -68,7 +84,7 @@ let BattleSchema = new SimpleSchema({
     autoform: {
       omit: true
     }
-  }
+  },
 });
 
 let BattleUserSchema = new SimpleSchema({

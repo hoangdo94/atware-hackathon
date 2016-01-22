@@ -2,17 +2,23 @@ AutoForm.hooks({
   createBattleForm: {
     before: {
       insert: (doc) => {
-        var self = this;
+        var time = Date.now();
         if (Meteor.userId()) {
           doc.creatorId = Meteor.userId();
-          // var textLength = Math.floor((Math.random() * 20) + 30);
-          // console.log(textLength);
-          // Meteor.call('generateRandomText', textLength, (err, text) => {
-          //   doc.battleText = text;
-          //   doc.battleTextArr = text.split(' ');
-          //   console.log(doc);
-          //   this.result(doc);
-          // });
+          doc.users = [{
+            userId: Meteor.userId(),
+            wordsCompleted: 0,
+            currentHp: 100
+          }];
+          doc.createTime = time;
+          doc.battleLog = [];
+          doc.battleLog.push({
+            userId: Meteor.userId(),
+            time: time,
+            action: ACTION.CREATE_BATTLE,
+            value: 0
+          });
+          console.log(doc);
           return doc;
         } else {
           return false;

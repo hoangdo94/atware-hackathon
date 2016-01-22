@@ -1,11 +1,3 @@
-var t = '';
-var total = 0;
-var correct = 0;
-var index = 0;
-var wc0 = 0;
-var wc1 = 0;
-var isSummarySent = false;
-
 Template.battle.onCreated(() => {
   t = '';
   total = 0;
@@ -14,48 +6,12 @@ Template.battle.onCreated(() => {
   wc0 = 0;
   wc1 = 0;
   isSummarySent = false;
+  var test = test;
 
   Template.instance().autorun(function() {
     if (Battle.findOne()) {
       var battle = Battle.findOne();
       var endTime = battle.endTime;
-
-      //animation
-      if (battle.users.length === 2) {
-        if (battle.users[0].wordsCompleted > wc0) {
-          console.log('0 attack');
-          wc0 = battle.users[0].wordsCompleted;
-          $('#vk0').addClass('active hit');
-          $('#vk0 > img').addClass('animated wobble');
-          $('#vk0 > img').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
-            $('#vk0 > img').removeClass('animated wobble');
-            $('#vk0').removeClass('active hit');
-          });
-
-          $('#vk1 > img').addClass('animated tada');
-          $('#vk1').addClass('active hitted');
-          $('#vk1 > img').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
-            $('#vk1 > img').removeClass('animated tada');
-            $('#vk1').removeClass('active hitted');
-          });
-        }
-        if (battle.users[1].wordsCompleted > wc1) {
-          wc1 = battle.users[1].wordsCompleted;
-          $('#vk1 > img').addClass('animated wobble');
-          $('#vk1').addClass('active hit');
-          $('#vk1 > img').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
-            $('#vk1 > img').removeClass('animated wobble');
-            $('#vk1').removeClass('active hit');
-          });
-           $('#vk0').addClass('active hitted');
-          $('#vk0 > img').addClass('animated tada');
-          $('#vk0 > img').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
-            $('#vk0 > img').removeClass('animated tada');
-             $('#vk0').removeClass('active hitted');
-          });
-        }
-      }
-
       //send summary
       if (!isSummarySent && endTime && battle.users.length) {
         var userIndex = -1;
@@ -69,7 +25,7 @@ Template.battle.onCreated(() => {
             if (total !== 0) {
               accuracy = correct / total;
             } else {
-              accuracy = 0;
+              accuracy = 1;
             }
             var requestObject = {
               battleId: FlowRouter.getParam('id'),
@@ -91,21 +47,11 @@ Template.battle.onCreated(() => {
     }
   });
 
-  Template.instance().autorun(() => {
-    var subsReady = FlowRouter.subsReady();
-    if (subsReady) {
-      if (!Battle.findOne()) {
-        console.log('not found');
-        BlazeLayout.render('default', {
-          yield: 'notFound'
-        });
-      }
-    }
-  });
 });
 
 Template.battle.helpers({
   battleInfo: () => Battle.findOne(),
+  isCreator: () => Meteor.userId() === Battle.findOne().creatorId,
   isJoined: () => {
     let b = Battle.findOne();
     if (b && b.users) {
@@ -139,12 +85,44 @@ Template.battle.helpers({
       return !!b.endTime;
     }
     return false;
+  },
+  battleLogMessage: (log) => {
+    var mess;
+    switch (log.action) {
+      case ACTION.CREATE_BATTLE:
+        mess = 'created the battle.';
+        break;
+      case ACTION.START_BATTLE:
+        mess = 'started the battle.';
+        break;
+      case ACTION.JOIN_BATTLE:
+        mess = 'joined the battle.';
+        break;
+      case ACTION.LEAVE_BATTLE:
+          mess = 'left the battle.';
+          break;
+      case ACTION.END_BATTLE:
+        mess = '<b>Battle ended!</b>.';
+        break;
+      case ACTION.ATTACK:
+        mess = 'attacked with the word <b>"' +log.word+ '"</b>, dealt <b>' + Math.round(log.value*100)/100 + '</b> damages.';
+        break;
+      default:
+        mess = 'Unkown.';
+    }
+    return mess;
+  },
+  resultHtml: (text) => {
+    if (text === 'win') {
+      return '<span style="color: green">WIN</span>';
+    } else {
+      return '<span style="color: red">LOSE</span>';
+    }
   }
 });
 
 Template.battle.events({
   'click .btn-join-battle': (evt, tmpl) => {
-    if (!FlowRouter.subsReady()) return;
     Meteor.call('joinBattle', {
       battleId: FlowRouter.getParam('id'),
       userId: Meteor.userId()
@@ -153,25 +131,35 @@ Template.battle.events({
         Bert.alert('Cannot join the battle!', 'danger', 'growl-top-right');
       } else {
         Bert.alert('You joined the battle!', 'success', 'growl-top-right');
-        // Check and start game
-        if (Battle.findOne().users.length === 2) {
-          Meteor.call('startBattle', {
-            battleId: FlowRouter.getParam('id')
-          });
-        }
       }
     });
   },
   'click .btn-leave-battle': (evt, tmpl) => {
-    if (!FlowRouter.subsReady()) return;
+    var accuracy;
+    if (total !== 0) {
+      accuracy = correct / total;
+    } else {
+      accuracy = 1;
+    }
     Meteor.call('leaveBattle', {
       battleId: FlowRouter.getParam('id'),
       userId: Meteor.userId(),
+      accuracy: accuracy
     }, (err) => {
       if (err) {
         Bert.alert('Cannot leave the battle!', 'error', 'growl-top-right');
       } else {
         Bert.alert('You left the battle!', 'success', 'growl-top-right');
+      }
+    });
+  },
+  'click .btn-start-battle': (evt, tmpl) => {
+    Meteor.call('startBattle', {
+      battleId: FlowRouter.getParam('id'),
+      userId: Meteor.userId()
+    }, (err) => {
+      if (err) {
+        Bert.alert(err.reason, 'danger', 'growl-top-right');
       }
     });
   },
