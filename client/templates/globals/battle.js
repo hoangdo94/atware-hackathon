@@ -3,8 +3,8 @@ Template.battle.onCreated(() => {
   total = 0;
   correct = 0;
   index = 0;
-  wc0 = 0;
-  wc1 = 0;
+  wc0 = 100;
+  wc1 = 100;
   isSummarySent = false;
   var test = test;
 
@@ -13,9 +13,52 @@ Template.battle.onCreated(() => {
       var battle = Battle.findOne();
       var startTime = battle.startTime;
       var endTime = battle.endTime;
-      if (startTime && !endTime) {
-        console.log('start battle');
-        $('#input-text').focus();
+      //play attack animation and focus on text input
+      if (startTime) {
+        //focus
+        if (!endTime) $('#input-text').focus();
+        //animation
+        var users = battle.users;
+        if (users[0].currentHp < wc0) {
+          //second user attack
+          wc0 = users[0].currentHp;
+          $('#vodkar-0 .attack-effect').show().addClass('animated tada');
+          $('#vodkar-0 .attack-effect').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+            $(this).hide().removeClass('animated tada');
+            $('#vodkar-0 img').addClass('animated shake');
+            $('#vodkar-0 img').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+              $(this).removeClass('animated shake');
+            });
+          });
+          if (wc0 <= 0) {
+            setTimeout(function() {
+              $('#vodkar-0 img').addClass('animated hinge');
+              $('#vodkar-0 img').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+                $(this).removeClass('animated hinge');
+              });
+            }, 500);
+          }
+        }
+        if (users[1].currentHp < wc1) {
+          //first user attack
+          wc1 = users[1].currentHp;
+          $('#vodkar-1 .attack-effect').show().addClass('animated tada');
+          $('#vodkar-1 .attack-effect').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+            $(this).hide().removeClass('animated tada');
+            $('#vodkar-1 img').addClass('animated shake');
+            $('#vodkar-1 img').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+              $(this).removeClass('animated shake');
+            });
+          });
+          if (wc1 <= 0) {
+            setTimeout(function() {
+              $('#vodkar-1 img').addClass('animated hinge');
+              $('#vodkar-1 img').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+                $(this).removeClass('animated hinge');
+              });
+            }, 500);
+          }
+        }
       }
       //send summary
       if (!isSummarySent && endTime && battle.users.length) {
@@ -48,6 +91,7 @@ Template.battle.onCreated(() => {
           }
         }
       }
+
     }
   });
 

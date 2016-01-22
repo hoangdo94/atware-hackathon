@@ -6,8 +6,9 @@
         <h3><a href="/user/{{battleInfo.users.[0].userId}}">{{userNickname battleInfo.users.[0].userId}}</a></h3>
         <h5>the <b>{{userVodkarClass battleInfo.users.[0].userId}}</b></h5>
       </h4>
-      <div class="thumbnail" style="margin: 0px 100px;">
+      <div id="vodkar-0" class="thumbnail vodkar-model" style="margin: 0px 100px;">
         <img src="{{userVodkarModel battleInfo.users.[0].userId}}">
+        {{> attackEffectClaw side="left"}}
       </div>
       <div class="progress" style="margin: 10px 100px;">
         <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="{{battleInfo.users.[0].currentHp}}" aria-valuemin="0" aria-valuemax="100" style="width: {{battleInfo.users.[0].currentHp}}%;">
@@ -42,14 +43,6 @@
       <br /> {{else}}
       <!-- Started -->
       {{#unless isEnded}}
-      <!-- <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">Battle Texts: {{battleInfo.battleTextArr.length}} Words</h3>
-        </div>
-        <div class="panel-body">
-          {{battleInfo.battleText}}
-        </div>
-      </div> -->
       {{/unless}} {{/unless}} {{#if isEnded}}
       <div class="row">
         <div class="col-sm-3">
@@ -83,10 +76,11 @@
         <h5>&nbsp;</h5>
       {{/if}}
       </h4>
-      <div class="thumbnail" style="margin: 0px 100px;">
+      <div id="vodkar-1" class="thumbnail vodkar-model" style="margin: 0px 100px;">
         {{#if battleInfo.users.[1]}}
         <img src="{{userVodkarModel battleInfo.users.[1].userId}}"> {{else}}
         <img src="/images/no-avatar.png"> {{/if}}
+        {{> attackEffectClaw side="right"}}
       </div>
       <div class="progress" style="margin: 10px 100px;">
         <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="{{battleInfo.users.[1].currentHp}}" aria-valuemin="0" aria-valuemax="100" style="width: {{battleInfo.users.[1].currentHp}}%;">

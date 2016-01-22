@@ -122,6 +122,28 @@ ul.reverse > li:nth-child(odd) {
 }
 
 /*Comments*/
+
 .comments-box {
   max-width: 100%;
+}
+
+/*Attack Effect*/
+
+.vodkar-model {
+  position: relative;
+  animation-duration: 0.2s;
+  -moz-animation-duration: 0.2s;
+  -webkit-animation-duration: 0.2s;
+}
+.attack-effect {
+  display: none;
+  position: absolute;
+  top: -2;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  fill: gray;
+  animation-duration: 0.2s;
+  -moz-animation-duration: 0.2s;
+  -webkit-animation-duration: 0.2s;
 }
