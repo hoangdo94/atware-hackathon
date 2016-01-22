@@ -13,7 +13,10 @@ Template.battle.onCreated(() => {
       var battle = Battle.findOne();
       var startTime = battle.startTime;
       var endTime = battle.endTime;
-
+      if (startTime && !endTime) {
+        console.log('start battle');
+        $('#input-text').focus();
+      }
       //send summary
       if (!isSummarySent && endTime && battle.users.length) {
         var userIndex = -1;
