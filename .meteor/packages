@@ -10,7 +10,6 @@ check
 audit-argument-checks
 themeteorchef:jquery-validation
 twbs:bootstrap
-browser-policy
 meteorhacks:npm
 
 
