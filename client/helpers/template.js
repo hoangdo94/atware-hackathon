@@ -26,9 +26,12 @@ Template.registerHelper('userVodkarClass', (userId) => {
   return 'Unknown';
 });
 Template.registerHelper('showPercentage', (input) => {
-    return (Math.round(input * 10000) / 100 + " %");
+  if (isNaN(input)) return 'N/A';
+  return (Math.round(input * 10000) / 100 + " %");
 });
 
 Template.registerHelper('beatifyTime', (date) => moment(date).format('DD/MM/YYYY, HH:mm:ss')); //DD/MM/YYYY, HH:mm:ss
+
+Template.registerHelper('humanizeDuration', (duration) => moment.duration(duration, 'seconds').humanize());
 
 Template.registerHelper('mathRound', (num) => Math.round(num*100)/100);

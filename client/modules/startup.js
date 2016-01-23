@@ -15,16 +15,10 @@ let startup = () => {
     } else {
       var currentRoute = FlowRouter.current();
       if (currentRoute.path.indexOf('/battle/') !== -1) {
-        var accuracy = 0;
-        if (total !== 0) {
-          accuracy = correct / total;
-        } else {
-          accuracy = 1;
-        }
         Meteor.call('leaveBattle', {
           battleId: currentRoute.params.id,
           userId: Meteor.userId(),
-          accuracy: accuracy
+          wordsMissed: total - correct
         });
       }
     }
@@ -35,6 +29,20 @@ let startup = () => {
     template: 'bootstrap' // or ionic, semantic-ui
   });
 
+  //shareit
+  ShareIt.init({
+    siteOrder: ['facebook', 'twitter'],
+    sites: {
+      'facebook': {
+        'appId': '1550218355295261',
+        'version': 'v2.5'
+      }
+    },
+    iconOnly: true,
+    applyColors: true,
+    // faClass: 'square',
+    // faSize: 'fa-lg'
+  });
 };
 
 Modules.client.startup = startup;

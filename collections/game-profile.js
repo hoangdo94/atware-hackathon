@@ -30,14 +30,21 @@ let GameProfileSchema = new SimpleSchema({
     label: "The points of the user.",
     defaultValue: 0
   },
-  "avgWPM": {
+  "wordsCompleted": {
     type: Number,
-    label: "Average words per minute.",
-    defaultValue: 0
+    label: "Number of completed words.",
+    defaultValue: 0,
+    decimal: true
   },
-  "avgAccuracy": {
+  "wordsMissed": {
     type: Number,
-    label: "Average accuracy (%).",
+    label: "Number of missed words.",
+    defaultValue: 0,
+    decimal: true
+  },
+  "timePlayed": {
+    type: Number,
+    label: "Total play time (in seconds).",
     defaultValue: 0,
     decimal: true
   },

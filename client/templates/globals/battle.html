@@ -7,8 +7,7 @@
         <h5>the <b>{{userVodkarClass battleInfo.users.[0].userId}}</b></h5>
       </h4>
       <div id="vodkar-0" class="thumbnail vodkar-model" style="margin: 0px 100px;">
-        <img src="{{userVodkarModel battleInfo.users.[0].userId}}">
-        {{> attackEffectClaw side="left"}}
+        <img src="{{userVodkarModel battleInfo.users.[0].userId}}"> {{> attackEffectClaw side="left"}}
       </div>
       <div class="progress" style="margin: 10px 100px;">
         <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="{{battleInfo.users.[0].currentHp}}" aria-valuemin="0" aria-valuemax="100" style="width: {{battleInfo.users.[0].currentHp}}%;">
@@ -33,8 +32,7 @@
       <btn class="btn btn-block btn-info" disabled>Join Battle</btn>
       {{else}}
       <btn class="btn btn-block btn-info btn-join-battle">Join Battle</btn>
-      {{/if}}
-      {{/if}} {{/if}} {{/if}}
+      {{/if}} {{/if}} {{/if}} {{/if}}
       <br />
       <div class="text-center">
         {{#unless isReady}} {{>loading}}
@@ -42,8 +40,7 @@
       </div>
       <br /> {{else}}
       <!-- Started -->
-      {{#unless isEnded}}
-      {{/unless}} {{/unless}} {{#if isEnded}}
+      {{#unless isEnded}} {{/unless}} {{/unless}} {{#if isEnded}}
       <div class="row animated bounceIn">
         <div class="col-sm-3">
           <h4>{{{resultHtml battleInfo.users.[0].result}}}</h4>
@@ -53,7 +50,7 @@
         </div>
         <div class="col-sm-6 text-center">
           <h4>RESULT</h4>
-          <p>Words typed</p>
+          <p>Words Completed</p>
           <p>Words per Minute</p>
           <p>Accuracy</p>
         </div>
@@ -63,6 +60,10 @@
           <p><span style="font-weight: bold;">{{battleInfo.users.[1].wpm}}</span></p>
           <p><span style="font-weight: bold;">{{showPercentage battleInfo.users.[1].accuracy}}</span></p>
         </div>
+      </div>
+      <br/>
+      <div class="row text-center">
+        {{>shareit shareData}}
       </div>
       {{/if}}
     </div>
@@ -79,8 +80,7 @@
       <div id="vodkar-1" class="thumbnail vodkar-model" style="margin: 0px 100px;">
         {{#if battleInfo.users.[1]}}
         <img src="{{userVodkarModel battleInfo.users.[1].userId}}"> {{else}}
-        <img src="/images/no-avatar.png"> {{/if}}
-        {{> attackEffectClaw side="right"}}
+        <img src="/images/no-avatar.png"> {{/if}} {{> attackEffectClaw side="right"}}
       </div>
       <div class="progress" style="margin: 10px 100px;">
         <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="{{battleInfo.users.[1].currentHp}}" aria-valuemin="0" aria-valuemax="100" style="width: {{battleInfo.users.[1].currentHp}}%;">
@@ -91,21 +91,14 @@
   </div>
   <hr/>
   <div class="row">
-    {{#if isStarted}}{{#if isJoined}}
-    {{#unless isEnded}}
+    {{#if isStarted}}{{#if isJoined}} {{#unless isEnded}}
     <div style="margin: 0px 30px;">
       <div class="jumbotron">
         <p id="key">{{battleInfo.battleText}}</p>
         <input class="form-control txtbox" id="input-text" type="text">
       </div>
     </div>
-    {{else}}
-    {{> logAndComment}}
-    {{/unless}}
-    {{else}}
-    {{> logAndComment}}
-    {{/if}}
-    {{/if}}
+    {{else}} {{> logAndComment}} {{/unless}} {{else}} {{> logAndComment}} {{/if}} {{/if}}
   </div>
   {{else}}
   <h3>Battle is destroyed or not exist!</h3> {{/if}}

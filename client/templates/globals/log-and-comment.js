@@ -17,7 +17,7 @@ Template.logAndComment.helpers({
           break;
       case ACTION.END_BATTLE:
         if (log.word) {
-          mess = 'ended the battle with the last word: <b>"'+ log.word +'"</b> and became the winner, congrats!!';
+          mess = 'ended the battle with the last word: <b>"'+ log.word +'"</b> and became the winner. Congrats!!';
         } else {
           mess = '<b>Battle ended!</b>.';
         }

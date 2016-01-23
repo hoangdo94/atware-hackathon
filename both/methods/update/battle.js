@@ -306,16 +306,15 @@ Meteor.methods({
 });
 
 var calculateAndUpdateUserProfile = (argument, isLeft) => {
-  try {
-    //console.log(argument, isLeft);
+    console.log(argument, isLeft);
+
     var users, player, opponent, points, accuracy, wpm;
-    var playerGP, newAvgWPM, newAvgAccuracy, gameProfileModifier;
+    var playerGP, gameProfileModifier;
     var battle = Battle.findOne(argument.battleId);
+    if (!battle) return null;
     var endTimeMs = new Date(battle.endTime).getTime();
     var startTimeMs = new Date(battle.startTime).getTime();
-    var battleTimeInMinutes = (endTimeMs - startTimeMs) / 60000;
-
-    if (!battle) return null;
+    var battleTimeInSeconds = (endTimeMs - startTimeMs) / 1000;
 
     users = battle.users;
     if (users[0].userId === argument.userId) {
@@ -325,14 +324,13 @@ var calculateAndUpdateUserProfile = (argument, isLeft) => {
       player = 1;
       opponent = 0;
     } else {
-      //console.log('break');
       return null;
     }
 
     if (player === 0) {
-      accuracy = argument.accuracy;
-      wpm = Math.floor(users[0].wordsCompleted / battleTimeInMinutes);
-      points = (isLeft) ? 0 : Math.round((battle.users[0].wordsCompleted * accuracy * wpm) / 20);
+      accuracy = users[0].wordsCompleted / (users[0].wordsCompleted + argument.wordsMissed);
+      wpm = Math.floor(users[0].wordsCompleted / (battleTimeInSeconds / 60));
+      points = (isLeft || users[0].wordsCompleted === 0) ? 0 : Math.round((users[0].wordsCompleted * accuracy * wpm) / 20);
       Battle.update(argument.battleId, {
         $set: {
           'users.0.accuracy': accuracy,
@@ -340,22 +338,14 @@ var calculateAndUpdateUserProfile = (argument, isLeft) => {
         },
       });
       playerGP = GameProfile.findOne({
-        userId: battle.users[0].userId
+        userId: users[0].userId
       });
-      if (playerGP.gamesPlayed.length === 0) {
-        newAvgWPM = wpm;
-        newAvgAccuracy = accuracy;
-      } else {
-        newAvgWPM = Math.round((wpm + playerGP.avgWPM * (playerGP.gamesPlayed.length - 1)) / playerGP.gamesPlayed.length);
-        newAvgAccuracy = Math.round((accuracy + playerGP.avgAccuracy * (playerGP.gamesPlayed.length - 1)) / playerGP.gamesPlayed.length * 100) / 100;
-      }
       gameProfileModifier = {
         $inc: {
-          points: points
-        },
-        $set: {
-          avgWPM: newAvgWPM,
-          avgAccuracy: newAvgAccuracy
+          points: points,
+          wordsCompleted: users[0].wordsCompleted,
+          wordsMissed: argument.wordsMissed,
+          timePlayed: battleTimeInSeconds
         },
         $push: {}
       };
@@ -369,9 +359,9 @@ var calculateAndUpdateUserProfile = (argument, isLeft) => {
         userId: battle.users[0].userId
       }, gameProfileModifier);
     } else {
-      accuracy = argument.accuracy;
-      wpm = Math.floor(users[1].wordsCompleted / battleTimeInMinutes);
-      points = (isLeft) ? 0 : Math.round((battle.users[1].wordsCompleted * accuracy * wpm) / 20);
+      accuracy = users[1].wordsCompleted / (users[1].wordsCompleted + argument.wordsMissed);
+      wpm = Math.floor(users[1].wordsCompleted / (battleTimeInSeconds / 60));
+      points = (isLeft || users[1].wordsCompleted === 0) ? 0 : Math.round((battle.users[1].wordsCompleted * accuracy * wpm) / 20);
       Battle.update(argument.battleId, {
         $set: {
           'users.1.accuracy': accuracy,
@@ -379,22 +369,14 @@ var calculateAndUpdateUserProfile = (argument, isLeft) => {
         },
       });
       playerGP = GameProfile.findOne({
-        userId: battle.users[1].userId
+        userId: users[1].userId
       });
-      if (playerGP.gamesPlayed.length === 0) {
-        newAvgWPM = wpm;
-        newAvgAccuracy = accuracy;
-      } else {
-        newAvgWPM = Math.round((wpm + playerGP.avgWPM * (playerGP.gamesPlayed.length - 1)) / playerGP.gamesPlayed.length);
-        newAvgAccuracy = Math.round((accuracy + playerGP.avgAccuracy * (playerGP.gamesPlayed.length - 1)) / playerGP.gamesPlayed.length * 100) / 100;
-      }
       gameProfileModifier = {
         $inc: {
-          points: points
-        },
-        $set: {
-          avgWPM: newAvgWPM,
-          avgAccuracy: newAvgAccuracy
+          points: points,
+          wordsCompleted: users[0].wordsCompleted,
+          wordsMissed: argument.wordsMissed,
+          timePlayed: battleTimeInSeconds
         },
         $push: {}
       };
@@ -405,11 +387,9 @@ var calculateAndUpdateUserProfile = (argument, isLeft) => {
         };
       }
       GameProfile.update({
-        userId: battle.users[1].userId
+        userId: users[1].userId
       }, gameProfileModifier);
     }
     return points;
-  } catch (exception) {
-    return exception;
-  }
+
 };

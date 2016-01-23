@@ -18,6 +18,14 @@ Template.userProfile.helpers({
       return "disabled";
     }
     return "";
+  },
+  averages: () => {
+    var gp = GameProfile.findOne({userId: FlowRouter.getParam('id')});
+    if (!gp) return {};
+    return {
+      wpm: Math.round(60*gp.wordsCompleted/gp.timePlayed),
+      accuracy: gp.wordsCompleted/(gp.wordsCompleted + gp.wordsMissed)
+    };
   }
 });
 

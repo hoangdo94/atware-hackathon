@@ -65,19 +65,14 @@ Template.battle.onCreated(() => {
         if (endTime && battle.users[userIndex] && !battle.users[userIndex].accuracy) {
           // Send this user's battle stats to the server
           if (userIndex !== -1) {
-            var accuracy;
-            if (total !== 0) {
-              accuracy = correct / total;
-            } else {
-              accuracy = 1;
-            }
             var requestObject = {
               battleId: FlowRouter.getParam('id'),
               userId: Meteor.userId(),
-              accuracy: Math.round(accuracy * 100) / 100
+              wordsMissed: total - correct
             };
             isSummarySent = true;
             Meteor.call('sendBattleSummary', requestObject, (err, points) => {
+              if (!points) return;
               if (battle.users[userIndex].result === 'win') {
                 Bert.alert('You won this battle!<br> <img src="/images/coins.png" width="24px"/> ' + points + ' awarded.', 'info', 'growl-top-right');
               } else {
@@ -136,6 +131,20 @@ Template.battle.helpers({
     } else {
       return '<span style="color: red">LOSE</span>';
     }
+  },
+  shareData: () => {
+    let b = Battle.findOne();
+    let p1,p2;
+    p1 = GameProfile.findOne({
+      userId: b.users[0].userId
+    }).nickname;
+    p2 = GameProfile.findOne({
+      userId: b.users[1].userId
+    }).nickname;
+    return {
+      title: b.title + ': ' + p1 + ' vs. ' + p2,
+      author: 'Vodkars Battle',
+    };
   }
 });
 
@@ -153,16 +162,10 @@ Template.battle.events({
     });
   },
   'click .btn-leave-battle': (evt, tmpl) => {
-    var accuracy;
-    if (total !== 0) {
-      accuracy = correct / total;
-    } else {
-      accuracy = 1;
-    }
     Meteor.call('leaveBattle', {
       battleId: FlowRouter.getParam('id'),
       userId: Meteor.userId(),
-      accuracy: accuracy
+      wordsMissed: total - correct
     }, (err) => {
       if (err) {
         Bert.alert('Cannot leave the battle!', 'error', 'growl-top-right');
@@ -228,5 +231,5 @@ Template.battle.events({
 });
 
 Template.battle.onRendered(() => {
-  $('[data-toggle="popover"]').popover();
+
 });
