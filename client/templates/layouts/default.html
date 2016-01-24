@@ -7,20 +7,21 @@
 				{{> loading}}
 			</div>
 		{{else}}
-		{{#if loggingIn}}
-			{{> loading}}
-		{{else}}
-			{{#if authenticated}}
-				{{#unless redirectAuthenticated}}
-					{{> Template.dynamic template=yield}}
-				{{/unless}}
+			{{#if loggingIn}}
+				<div class="text-center">
+					{{> loading}}
+				</div>
 			{{else}}
-				{{#unless redirectPublic}}
-					{{> Template.dynamic template=yield}}
-				{{/unless}}
+				{{#if authenticated}}
+					{{#unless redirectAuthenticated}}
+						{{> Template.dynamic template=yield}}
+					{{/unless}}
+				{{else}}
+					{{#unless redirectPublic}}
+						{{> Template.dynamic template=yield}}
+					{{/unless}}
+				{{/if}}
 			{{/if}}
 		{{/if}}
-		{{/if}}
-
 	</div>
 </template>

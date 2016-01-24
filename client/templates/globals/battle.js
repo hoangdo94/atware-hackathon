@@ -131,20 +131,6 @@ Template.battle.helpers({
     } else {
       return '<span style="color: red">LOSE</span>';
     }
-  },
-  shareData: () => {
-    let b = Battle.findOne();
-    let p1,p2;
-    p1 = GameProfile.findOne({
-      userId: b.users[0].userId
-    }).nickname;
-    p2 = GameProfile.findOne({
-      userId: b.users[1].userId
-    }).nickname;
-    return {
-      title: b.title + ': ' + p1 + ' vs. ' + p2,
-      author: 'Vodkars Battle',
-    };
   }
 });
 

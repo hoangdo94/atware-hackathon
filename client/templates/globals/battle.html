@@ -20,7 +20,8 @@
       <div class="text-center">
         <h2>{{battleInfo.title}}</h2>
       </div>
-      <hr /> {{#unless isStarted}}
+      <hr class="star-primary">
+      {{#unless isStarted}}
       <!-- Not started -->
       <br /> {{#if currentUser}} {{#if isCreator}} {{#if isReady}}
       <btn class="btn btn-block btn-success btn-start-battle">Start Battle!</btn>
@@ -61,10 +62,7 @@
           <p><span style="font-weight: bold;">{{showPercentage battleInfo.users.[1].accuracy}}</span></p>
         </div>
       </div>
-      <br/>
-      <div class="row text-center">
-        {{>shareit shareData}}
-      </div>
+      <hr class="star-primary">
       {{/if}}
     </div>
     <div class="col-md-4 text-center">
@@ -89,7 +87,6 @@
       </div>
     </div>
   </div>
-  <hr/>
   <div class="row">
     {{#if isStarted}}{{#if isJoined}} {{#unless isEnded}}
     <div style="margin: 0px 30px;">

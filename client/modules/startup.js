@@ -38,10 +38,9 @@ let startup = () => {
         'version': 'v2.5'
       }
     },
-    iconOnly: true,
-    applyColors: true,
-    // faClass: 'square',
-    // faSize: 'fa-lg'
+    iconOnly: false,
+    applyColors: false,
+    classes: 'btn btn-success btn-sm'
   });
 };
 
